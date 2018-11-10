@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 3a9cdd527dc628d4f8e8e53d230278d5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: ca7b5b45faf3348409f38dfb431e30a3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - MainCamera: {fileID: 20595805751681852, guid: 04f07eb72a09d3a40bd0c9885e6bd042,
+      type: 2}
+  - BasicFloor: {instanceID: 0}
+  - CrossHoleFloor: {instanceID: 0}
+  - BigCrossHoleFloor: {instanceID: 0}
+  - SatelliteHoleFloor: {instanceID: 0}
+  - BaseCactus: {fileID: 4474279505127030, guid: 1f57eb00f14ccf54bad4384f0b03ad24,
+      type: 2}
+  - Perk: {instanceID: 0}
+  - Orb_Player1: {instanceID: 0}
+  - Orb_Player2: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
