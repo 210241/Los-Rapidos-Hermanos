@@ -108,9 +108,7 @@ public class GameMaster : MonoBehaviour
         if (numberOfFloors == 1)
         {
             IsWallOnTheScreen = true;
-            ListOfFloors.Enqueue(Instantiate(GetRandomBlock(), new Vector3(0, 0, orbInstancePlayer1.position.z + 25), noRotate));
-            Instantiate(Wall, new Vector3(0, 2, orbInstancePlayer1.position.z + 25), noRotate);
-            
+            Instantiate(Wall, new Vector3(0, 2, orbInstancePlayer1.position.z + 27), noRotate);          
             numberOfFloors = 0;
         }
 
