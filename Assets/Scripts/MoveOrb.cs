@@ -26,6 +26,7 @@ public class MoveOrb : MonoBehaviour
     private float timer = 0;
     
     public bool canJump;
+    public bool canShoot;
 
     // Use this for initialization
     private void Start()
@@ -54,7 +55,7 @@ public class MoveOrb : MonoBehaviour
             vertVel = JUMP_VEL;
             StartCoroutine(stopJump());
         }
-        if(Input.GetKeyDown(shoot))
+        if(Input.GetKeyDown(shoot) && canShoot)
         {
             var position = GetComponent<Transform>().position;
             Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
@@ -84,6 +85,8 @@ public class MoveOrb : MonoBehaviour
                 SpeedUp();
             else if (name == Perks.BottlePoint.ToString())
                 AddPointToAppropriatePlayer();
+            else if (name == Perks.BlockShooting.ToString())
+                StopShooting();
         }
 
         if (other.gameObject.tag == Tags.Cactus.ToString())
@@ -97,6 +100,19 @@ public class MoveOrb : MonoBehaviour
     {
         zVel = 3;
         StartCoroutine(stopSpeedUp());
+    }
+
+    private void StopShooting()
+    {
+        canShoot = false;
+        StartCoroutine(startShooting());
+    }
+
+    private void handleSideMovement(KeyCode moveButton)
+    {
+        horizVel = moveButton == moveR ? 2 : -2;
+        if (slidingCoroutine != null) StopCoroutine(slidingCoroutine);
+        slidingCoroutine = StartCoroutine(stopSlide(moveButton));
     }
 
     private void handleSideMovementPad()
@@ -121,6 +137,11 @@ public class MoveOrb : MonoBehaviour
         zVel = 0;
     }
 
+    private IEnumerator startShooting()
+    {
+        yield return new WaitForSeconds(5f);
+        canShoot = true;
+    } 
     private IEnumerator stopSlide(KeyCode moveButton)
     {
         yield return new WaitWhile(() => Input.GetKey(moveButton));

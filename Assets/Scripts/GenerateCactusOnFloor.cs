@@ -12,17 +12,20 @@ public class GenerateCactusOnFloor : MonoBehaviour
     private List<Transform> Cactie = new List<Transform>();
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-        var position = GetComponent<Transform>().position;
-        int numberOfCactie = Random.Range(1, 4);
-        for (int i = 0; i < numberOfCactie; i++)
+        if (!GameMaster.IsWallOnTheScreen)
         {
-            Cactie.Add(
-                Instantiate(Cactus,
-                    new Vector3(position.x + Random.Range(-2, 3), position.y, position.z + Random.Range(0, 5)),
-                    noRotate)
-            );
+            var position = GetComponent<Transform>().position;
+            int numberOfCactie = Random.Range(1, 4);
+            for (int i = 0; i < numberOfCactie; i++)
+            {
+                Cactie.Add(
+                    Instantiate(Cactus,
+                        new Vector3(position.x + Random.Range(-2, 3), position.y, position.z + Random.Range(0, 5)),
+                        noRotate)
+                );
+            }
         }
     }
 
