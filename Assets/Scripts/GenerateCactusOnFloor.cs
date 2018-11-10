@@ -14,7 +14,7 @@ public class GenerateCactusOnFloor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (!GameMaster.IsWallOnTheScreen)
+        if (!GameMaster.IsWallOnTheScreen && GameMaster.startSpawningCactie)
         {
             var position = GetComponent<Transform>().position;
             int numberOfCactie = Random.Range(1, 4);

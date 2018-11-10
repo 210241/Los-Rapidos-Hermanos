@@ -37,7 +37,9 @@ public class GameMaster : MonoBehaviour
     private Transform orbInstancePlayer1;
     private Transform orbInstancePlayer2;
     private Camera mainCameraInstance;
-    private int numberOfFloors;
+    private int floorsWithoutWall;
+
+    public static bool startSpawningCactie = false;
 
     //private Random random = new Random();
     private void PopulatePossibleFloorsList()
@@ -57,6 +59,8 @@ public class GameMaster : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        startSpawningCactie = false;
+
         mainCameraInstance = Instantiate(MainCamera, new Vector3(0f, 3.14f, -2.34f), noRotate);
         mainCameraInstance.transform.Rotate(42.15f, 0, 0);
 
@@ -69,7 +73,10 @@ public class GameMaster : MonoBehaviour
         ListOfFloors.Enqueue(Instantiate(BasicFloor, new Vector3(0, 0, 0), noRotate));
         ListOfFloors.Enqueue(Instantiate(BasicFloor, new Vector3(0, 0, 5), noRotate));
 
+
         PopulatePossibleFloorsList();
+
+
         for (int i = 2; i < 10; i++)
         {
             ListOfFloors.Enqueue(Instantiate(GetRandomBlock(), new Vector3(0, 0, i * 5), noRotate));
@@ -80,6 +87,7 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        startSpawningCactie = true;
         if (orbInstancePlayer1 == null)
         {
             orbInstancePlayer1 = orbInstancePlayer2;
@@ -94,8 +102,9 @@ public class GameMaster : MonoBehaviour
             var firstFloor = ListOfFloors.Dequeue();
             Destroy(firstFloor.gameObject);
             ListOfFloors.Enqueue(Instantiate(GetRandomBlock(), new Vector3(0, 0, orbInstancePlayer1.position.z + 25), noRotate));
+
             if (!IsWallOnTheScreen)
-                numberOfFloors++;
+                floorsWithoutWall++;
 
 
         }
@@ -105,13 +114,12 @@ public class GameMaster : MonoBehaviour
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
 
-        if (numberOfFloors == 1)
+        if (floorsWithoutWall == 10)
         {
             IsWallOnTheScreen = true;
-            ListOfFloors.Enqueue(Instantiate(GetRandomBlock(), new Vector3(0, 0, orbInstancePlayer1.position.z + 25), noRotate));
-            Instantiate(Wall, new Vector3(0, 2, orbInstancePlayer1.position.z + 27), noRotate);          
+            Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 27), noRotate);          
 
-            numberOfFloors = 0;
+            floorsWithoutWall = 0;
         }
 
     }
