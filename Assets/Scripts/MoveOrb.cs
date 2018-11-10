@@ -108,13 +108,6 @@ public class MoveOrb : MonoBehaviour
         StartCoroutine(startShooting());
     }
 
-    private void handleSideMovement(KeyCode moveButton)
-    {
-        horizVel = moveButton == moveR ? 2 : -2;
-        if (slidingCoroutine != null) StopCoroutine(slidingCoroutine);
-        slidingCoroutine = StartCoroutine(stopSlide(moveButton));
-    }
-
     private void handleSideMovementPad()
     {
         if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
