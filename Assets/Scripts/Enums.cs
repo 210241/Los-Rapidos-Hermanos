@@ -29,7 +29,8 @@ namespace EnumNamespace
     {
         Ground,
         Perk,
-        Destroyable
+        Destroyable,
+        Cactus
 
     }
 

@@ -8,6 +8,8 @@ TagManager:
   - Perk
   - Ground
   - Destroyable
+  - Lethal
+  - Cactus
   layers:
   - Default
   - TransparentFX
