@@ -9,7 +9,9 @@ namespace EnumNamespace
     {
         BottlePoint,
         TacoIncreaseSpeed,
-        BlockShooting
+        BlockShooting,
+        ReverseControls,
+        GhostPerk
     }
 
     public enum Players

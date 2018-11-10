@@ -30,6 +30,9 @@ public class GameMaster : MonoBehaviour
     public static bool PlayerTwoIsAlive = true;
     public static bool IsWallOnTheScreen = false;
 
+    public static int PlayerOneControlReversedMultiplier = 1;
+    public static int PlayerTwoControlReversedMultiplier = 1;
+
     public static Quaternion noRotate = new Quaternion(0, 0, 0, 0);
     List<Transform> PossibleFloors = new List<Transform>();
     Queue<Transform> ListOfFloors = new Queue<Transform>();
@@ -38,6 +41,8 @@ public class GameMaster : MonoBehaviour
     private Transform orbInstancePlayer2;
     private Camera mainCameraInstance;
     private int floorsWithoutWall;
+
+    
 
     public static bool startSpawningCactie = false;
 
@@ -106,7 +111,6 @@ public class GameMaster : MonoBehaviour
             if (!IsWallOnTheScreen)
                 floorsWithoutWall++;
 
-
         }
         var averageOrbZ = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2;
         mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, mainCameraInstance.transform.position.y, averageOrbZ - 2.5f);
@@ -117,7 +121,7 @@ public class GameMaster : MonoBehaviour
         if (floorsWithoutWall == 10)
         {
             IsWallOnTheScreen = true;
-            Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 27), noRotate);          
+            Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10 ), noRotate);          
 
             floorsWithoutWall = 0;
         }
