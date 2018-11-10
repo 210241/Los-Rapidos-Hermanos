@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooting : MonoBehaviour {
+public class Shooting : MonoBehaviour
+{
 
-    
+    public GameObject PlayerObject;
 
 	// Use this for initialization
 	void Start () {

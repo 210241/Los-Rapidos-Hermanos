@@ -118,7 +118,7 @@ public class GameMaster : MonoBehaviour
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
 
-        if (floorsWithoutWall == 10)
+        if (floorsWithoutWall == 100)
         {
             IsWallOnTheScreen = true;
             Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10 ), noRotate);          

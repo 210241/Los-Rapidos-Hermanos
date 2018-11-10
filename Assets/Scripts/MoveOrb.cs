@@ -17,7 +17,7 @@ public class MoveOrb : MonoBehaviour
     public float zSpeed = 0;
     public int laneNum = 2;
     public bool controlLocked = false;
-    public Transform Bullet;
+    public Shooting Bullet;
 
 
     private Vector3 BASE_GRAVITY = new Vector3(0f, -120.0F, 0f);
@@ -59,8 +59,8 @@ public class MoveOrb : MonoBehaviour
         if (Input.GetKeyDown(shoot) && canShoot)
         {
             var position = GetComponent<Transform>().position;
-            Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
-
+            var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
+            bullet.PlayerObject = GetComponent<Transform>().gameObject;
         }
 
         if (GetComponent<Transform>().position.y < 0)
@@ -99,7 +99,7 @@ public class MoveOrb : MonoBehaviour
             DestroyAppropriatePlayer();
         }
 
-        
+
 
 
     }
