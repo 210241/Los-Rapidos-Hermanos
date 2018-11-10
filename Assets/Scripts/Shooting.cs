@@ -20,7 +20,7 @@ public class Shooting : MonoBehaviour {
 
     private void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == Tags.Destroyable.ToString())
+        if(other.gameObject.tag == Tags.Cactus.ToString())
         {
             Destroy(other.gameObject);
            // Destroy(GetComponent<Rigidbody>().gameObject);

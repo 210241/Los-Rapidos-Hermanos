@@ -9,11 +9,7 @@ public class MoveOrb : MonoBehaviour
     private int JUMP_VEL = 5;
 
     
-    public KeyCode moveL;
-    public KeyCode moveR;
     public KeyCode jump;
-    public KeyCode moveUp;
-    public KeyCode moveDown;
     public KeyCode shoot;
     public float horizVel = 0;
     public float vertVel = 0;
@@ -53,26 +49,6 @@ public class MoveOrb : MonoBehaviour
         var orb = GetComponent<Rigidbody>();
         orb.velocity = new Vector3(horizVel, vertVel, 5 + zVel);
 
-        if ((Input.GetKeyDown(moveL))) //&& (laneNum > 0) && (!controlLocked))
-        {
-            handleSideMovement(moveL);
-        }
-
-        if ((Input.GetKeyDown(moveR))) // && (laneNum < 4) && (!controlLocked))
-        {
-            handleSideMovement(moveR);
-        }
-
-        if (Input.GetKeyDown(moveUp))
-        {
-            handleZMovement(moveUp);
-        }
-
-        if (Input.GetKeyDown(moveDown))
-        {
-            handleZMovement(moveDown);  
-        }
-
         if (Input.GetKeyDown(jump) && canJump)
         {
             canJump = false;
@@ -88,12 +64,7 @@ public class MoveOrb : MonoBehaviour
 
         if (GetComponent<Transform>().position.y < 0)
         {
-            var player = GetComponent<Rigidbody>().gameObject;
-            Destroy(player);
-            if (player.name == Players.PlayerOne.ToString())
-                GameMaster.PlayerOneIsAlive = false;
-            else
-                GameMaster.PlayerTwoIsAlive = false;
+            DestroyAppropriatePlayer();
         }
 
     }
@@ -118,6 +89,11 @@ public class MoveOrb : MonoBehaviour
                 StopShooting();
         }
 
+        if (other.gameObject.tag == Tags.Cactus.ToString())
+        {
+            DestroyAppropriatePlayer();
+        }
+
     }
 
     private void SpeedUp()
@@ -130,13 +106,6 @@ public class MoveOrb : MonoBehaviour
     {
         canShoot = false;
         StartCoroutine(startShooting());
-    }
-
-    private void handleSideMovement(KeyCode moveButton)
-    {
-        horizVel = moveButton == moveR ? 2 : -2;
-        if (slidingCoroutine != null) StopCoroutine(slidingCoroutine);
-        slidingCoroutine = StartCoroutine(stopSlide(moveButton));
     }
 
     private void handleSideMovementPad()
@@ -153,13 +122,6 @@ public class MoveOrb : MonoBehaviour
             horizVel = 2 * Input.GetAxis(Axis.LeftRightPadTwo.ToString());
             zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadTwo.ToString());
         }
-    }
-
-    private void handleZMovement(KeyCode moveButton)
-    {
-        zVel = moveButton == moveUp ? 2 : -2;
-        if (zCoroutine != null) StopCoroutine(zCoroutine);
-        zCoroutine = StartCoroutine(stopZMovement(moveButton));
     }
 
     private IEnumerator stopSpeedUp()
@@ -219,4 +181,15 @@ public class MoveOrb : MonoBehaviour
                 GameMaster.PlayerTwoPoints += 1;
         }
     }
+
+    private void DestroyAppropriatePlayer()
+    {
+        var player = GetComponent<Rigidbody>().gameObject;
+        Destroy(player);
+        if (player.name == Players.PlayerOne.ToString())
+            GameMaster.PlayerOneIsAlive = false;
+        else
+            GameMaster.PlayerTwoIsAlive = false;
+    }
+
 }
