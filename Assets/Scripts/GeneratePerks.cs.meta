@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 5d6e0c400c32e2c4ea22deff52136bb8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Reverse: {fileID: 4277352480639190, guid: 19093cbc41261284e872885018863d24, type: 2}
+  - BlockShooting: {fileID: 4087408797790842, guid: d04b75b51daa49f458fcea7aea776518,
+      type: 2}
+  - GhostPerk: {fileID: 4989201320189670, guid: a9a8f797d85d936438c24f59f7c01c02,
+      type: 2}
+  - Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

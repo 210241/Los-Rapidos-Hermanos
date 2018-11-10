@@ -238,8 +238,8 @@ GameObject:
   - component: {fileID: 33208972865821276}
   - component: {fileID: 23450108336548738}
   - component: {fileID: 65378695125517646}
-  - component: {fileID: 114952989566028324}
   - component: {fileID: 114718245615253762}
+  - component: {fileID: 114318876912485008}
   m_Layer: 0
   m_Name: SatelliteHoleFloorBlock(5x5) 1 1
   m_TagString: Ground
@@ -1646,6 +1646,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114318876912485008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1696614294807430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6e0c400c32e2c4ea22deff52136bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Reverse: {fileID: 4277352480639190, guid: 19093cbc41261284e872885018863d24, type: 2}
+  BlockShooting: {fileID: 4087408797790842, guid: d04b75b51daa49f458fcea7aea776518,
+    type: 2}
+  GhostPerk: {fileID: 4989201320189670, guid: a9a8f797d85d936438c24f59f7c01c02, type: 2}
+  Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
 --- !u!114 &114718245615253762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1658,15 +1674,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Point: {fileID: 4305299395019544, guid: 105c46781ac15da4db31e52b3ebca434, type: 2}
---- !u!114 &114952989566028324
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1696614294807430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a9cdd527dc628d4f8e8e53d230278d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
