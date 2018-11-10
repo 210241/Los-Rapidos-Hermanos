@@ -26,6 +26,17 @@ public class Shooting : MonoBehaviour
             Destroy(other.gameObject);
            // Destroy(GetComponent<Rigidbody>().gameObject);
         }
+        else if(other.gameObject.tag == Tags.Wall.ToString())
+        {
+            GameMaster.WallHealth--; 
+            if (GameMaster.WallHealth == 0)
+                {
+                    Destroy(other.gameObject);
+                    GameMaster.IsWallOnTheScreen = false;
+                    GameMaster.WallHealth = 3;
+                }
+        }
+
 
             Destroy(GetComponent<Rigidbody>().gameObject);
     }

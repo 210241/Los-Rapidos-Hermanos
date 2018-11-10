@@ -45,6 +45,8 @@ public class GameMaster : MonoBehaviour
     public static Vector3 AvgOrbsVelocity; 
     public static Vector3 orbVelocity1;
     public static Vector3 orbVelocity2;
+
+    public static int WallHealth = 3;
     
 
     public static bool startSpawningCactie = false;
@@ -123,7 +125,7 @@ public class GameMaster : MonoBehaviour
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
 
-        if (floorsWithoutWall == 5)
+        if (floorsWithoutWall == 10)
         {
             IsWallOnTheScreen = true;
             Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10 ), noRotate);          

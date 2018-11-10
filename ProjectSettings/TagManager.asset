@@ -10,6 +10,7 @@ TagManager:
   - Destroyable
   - Lethal
   - Cactus
+  - Wall
   layers:
   - Default
   - TransparentFX

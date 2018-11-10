@@ -33,8 +33,8 @@ namespace EnumNamespace
         Ground,
         Perk,
         Destroyable,
-        Cactus
-
+        Cactus,
+        Wall
     }
 
     public enum Axis
