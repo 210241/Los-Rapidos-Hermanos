@@ -50,14 +50,6 @@ public class MoveOrb : MonoBehaviour
         var orb = GetComponent<Rigidbody>();
         orb.velocity = new Vector3(horizVel, vertVel, 5 + zVel + zSpeed);
 
-        if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
-        {
-            GameMaster.orbVelocity1 = orb.GetComponent<Rigidbody>().velocity;
-        }
-        if (GetComponent<Transform>().gameObject.name == Players.PlayerTwo.ToString())
-        {
-            GameMaster.orbVelocity2 = orb.GetComponent<Rigidbody>().velocity;
-        }
 
         if (Input.GetKeyDown(jump) && canJump)
         {
@@ -115,9 +107,13 @@ public class MoveOrb : MonoBehaviour
 
     private void GhostOn()
     {
+        canJump = false;
+
+        vertVel = 0;
+        var position = GetComponent<Transform>().position;
+        GetComponent<Transform>().position = new Vector3(position.x, 0.3516032f, position.z);
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<SphereCollider>().isTrigger = true;
-        canJump = false;
         StartCoroutine(GhostOff());
     }
 

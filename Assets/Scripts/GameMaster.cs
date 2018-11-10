@@ -47,7 +47,8 @@ public class GameMaster : MonoBehaviour
     public static Vector3 orbVelocity2;
 
     public static int WallHealth = 3;
-    
+    public static float StandardVerticalOrbPositon;
+
 
     public static bool startSpawningCactie = false;
 
@@ -79,9 +80,9 @@ public class GameMaster : MonoBehaviour
         orbInstancePlayer1.name = Players.PlayerOne.ToString();
         orbInstancePlayer2.name = Players.PlayerTwo.ToString();
 
-
         ListOfFloors.Enqueue(Instantiate(BasicFloor, new Vector3(0, 0, 0), noRotate));
         ListOfFloors.Enqueue(Instantiate(BasicFloor, new Vector3(0, 0, 5), noRotate));
+
 
 
         PopulatePossibleFloorsList();
@@ -91,7 +92,6 @@ public class GameMaster : MonoBehaviour
         {
             ListOfFloors.Enqueue(Instantiate(GetRandomBlock(), new Vector3(0, 0, i * 5), noRotate));
         }
-
     }
 
     // Update is called once per frame
@@ -120,15 +120,18 @@ public class GameMaster : MonoBehaviour
         var averageOrbZ = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2;
         mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, mainCameraInstance.transform.position.y, averageOrbZ - 2.5f);
 
-        AvgOrbsVelocity = new Vector3(0, 0, ((orbVelocity1.z + orbVelocity2.z)/2));
+        var playerVelocity1 = orbInstancePlayer1.gameObject.GetComponent<Rigidbody>().velocity;
+        var playerVelocity2 = orbInstancePlayer2.gameObject.GetComponent<Rigidbody>().velocity;
+
+        AvgOrbsVelocity = new Vector3(0, 0, (playerVelocity1.z + playerVelocity2.z) / 2);
 
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
 
-        if (floorsWithoutWall == 10)
+        if (floorsWithoutWall == 20)
         {
             IsWallOnTheScreen = true;
-            Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10 ), noRotate);          
+            Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10), noRotate);
 
             floorsWithoutWall = 0;
         }
