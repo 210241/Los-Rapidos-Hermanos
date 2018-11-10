@@ -22,11 +22,13 @@ public class GameMaster : MonoBehaviour
     public Transform Orb_Player1;
     public Transform Orb_Player2;
 
+
     public static int PlayerOnePoints;
     public static int PlayerTwoPoints;
 
     public static bool PlayerOneIsAlive = true;
     public static bool PlayerTwoIsAlive = true;
+    public static bool IsWallOnTheScreen = false;
 
     public static Quaternion noRotate = new Quaternion(0, 0, 0, 0);
     List<Transform> PossibleFloors = new List<Transform>();
@@ -35,6 +37,7 @@ public class GameMaster : MonoBehaviour
     private Transform orbInstancePlayer1;
     private Transform orbInstancePlayer2;
     private Camera mainCameraInstance;
+    private int numberOfFloors;
 
     //private Random random = new Random();
     private void PopulatePossibleFloorsList()
@@ -55,7 +58,7 @@ public class GameMaster : MonoBehaviour
     void Start()
     {
         mainCameraInstance = Instantiate(MainCamera, new Vector3(0f, 3.14f, -2.34f), noRotate);
-        mainCameraInstance.transform.Rotate(42.15f,0,0);
+        mainCameraInstance.transform.Rotate(42.15f, 0, 0);
 
         orbInstancePlayer1 = Instantiate(Orb_Player1, new Vector3(-1, 0, 0), noRotate);
         orbInstancePlayer2 = Instantiate(Orb_Player2, new Vector3(1, 0, 0), noRotate);
@@ -78,9 +81,9 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (orbInstancePlayer1 == null )
+        if (orbInstancePlayer1 == null)
         {
-            orbInstancePlayer1 = orbInstancePlayer2;    
+            orbInstancePlayer1 = orbInstancePlayer2;
         }
         if (orbInstancePlayer2 == null)
         {
@@ -92,12 +95,21 @@ public class GameMaster : MonoBehaviour
             var firstFloor = ListOfFloors.Dequeue();
             Destroy(firstFloor.gameObject);
             ListOfFloors.Enqueue(Instantiate(GetRandomBlock(), new Vector3(0, 0, orbInstancePlayer1.position.z + 25), noRotate));
+            if (!IsWallOnTheScreen)
+                numberOfFloors++;
+
         }
         var averageOrbZ = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2;
         mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, mainCameraInstance.transform.position.y, averageOrbZ - 2.5f);
 
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
+
+        if (numberOfFloors == 10)
+        {
+            IsWallOnTheScreen = true;
+            numberOfFloors = 0;
+        }
 
     }
 }

@@ -8,7 +8,8 @@ namespace EnumNamespace
    public enum Perks
     {
         BottlePoint,
-        TacoIncreaseSpeed
+        TacoIncreaseSpeed,
+        BlockShooting
     }
 
     public enum Players
