@@ -21,7 +21,7 @@ public class GameMaster : MonoBehaviour
     public Transform Perk;
     public Transform Orb_Player1;
     public Transform Orb_Player2;
-
+    public Transform Wall;
 
     public static int PlayerOnePoints;
     public static int PlayerTwoPoints;
@@ -62,7 +62,6 @@ public class GameMaster : MonoBehaviour
 
         orbInstancePlayer1 = Instantiate(Orb_Player1, new Vector3(-1, 0, 0), noRotate);
         orbInstancePlayer2 = Instantiate(Orb_Player2, new Vector3(1, 0, 0), noRotate);
-
         orbInstancePlayer1.name = Players.PlayerOne.ToString();
         orbInstancePlayer2.name = Players.PlayerTwo.ToString();
 
@@ -98,6 +97,7 @@ public class GameMaster : MonoBehaviour
             if (!IsWallOnTheScreen)
                 numberOfFloors++;
 
+
         }
         var averageOrbZ = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2;
         mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, mainCameraInstance.transform.position.y, averageOrbZ - 2.5f);
@@ -105,9 +105,11 @@ public class GameMaster : MonoBehaviour
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
 
-        if (numberOfFloors == 10)
         {
             IsWallOnTheScreen = true;
+            ListOfFloors.Enqueue(Instantiate(GetRandomBlock(), new Vector3(0, 0, orbInstancePlayer1.position.z + 25), noRotate));
+            Instantiate(Wall, new Vector3(0, 2, orbInstancePlayer1.position.z + 25), noRotate);
+            
             numberOfFloors = 0;
         }
 

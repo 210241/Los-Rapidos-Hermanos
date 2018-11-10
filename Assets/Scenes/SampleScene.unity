@@ -157,6 +157,7 @@ MonoBehaviour:
     type: 2}
   Orb_Player2: {fileID: 4338892484467992, guid: a27d29e7fa3ae9844aac56a7b2c8e50f,
     type: 2}
+  Wall: {fileID: 4503256689226266, guid: 33a3440aeb5939648b83d7302a3f19fb, type: 2}
 --- !u!4 &122791640
 Transform:
   m_ObjectHideFlags: 0

@@ -126,6 +126,7 @@ MonoBehaviour:
   controlLocked: 0
   Bullet: {fileID: 4184655432627994, guid: f7fd218afb5ff04438bdcaa3b61b6314, type: 2}
   canJump: 1
+  canShoot: 1
 --- !u!135 &135561628875952452
 SphereCollider:
   m_ObjectHideFlags: 1
