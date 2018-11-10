@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class MoveWall : MonoBehaviour {
 
+	Rigidbody orb;
 	// Use this for initialization
 	void Start () {
-	    var orb = GetComponent<Rigidbody>();
-	    orb.velocity = new Vector3(0, 0, 4.5f);
+	    orb = GetComponent<Rigidbody>();
+	    orb.velocity = new Vector3(0, 0, GameMaster.AvgOrbsVelocity.z - 1.0f);
     }
 	
 	// Update is called once per frame
 	void Update () {
-	    
+	    orb.velocity = new Vector3(0, 0, GameMaster.AvgOrbsVelocity.z - 1.0f);
     }
 
     private void OnCollisionEnter(Collision other)

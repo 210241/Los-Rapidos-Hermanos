@@ -42,6 +42,9 @@ public class GameMaster : MonoBehaviour
     private Camera mainCameraInstance;
     private int floorsWithoutWall;
 
+    public static Vector3 AvgOrbsVelocity; 
+    public static Vector3 orbVelocity1;
+    public static Vector3 orbVelocity2;
     
 
     public static bool startSpawningCactie = false;
@@ -115,10 +118,12 @@ public class GameMaster : MonoBehaviour
         var averageOrbZ = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2;
         mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, mainCameraInstance.transform.position.y, averageOrbZ - 2.5f);
 
+        AvgOrbsVelocity = new Vector3(0, 0, ((orbVelocity1.z + orbVelocity2.z)/2));
+
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
 
-        if (floorsWithoutWall == 100)
+        if (floorsWithoutWall == 5)
         {
             IsWallOnTheScreen = true;
             Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10 ), noRotate);          
