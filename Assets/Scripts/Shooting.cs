@@ -30,12 +30,14 @@ public class Shooting : MonoBehaviour
         {
             if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
             {
-                GameMaster.CurrentWallHealthPlayerOne--;
+                if(GameMaster.CurrentWallHealthPlayerOne > 0)
+                    GameMaster.CurrentWallHealthPlayerOne--;
                 
             }
             else
             {
-                GameMaster.CurrentWallHealthPlayerTwo--;
+                if (GameMaster.CurrentWallHealthPlayerTwo > 0)
+                    GameMaster.CurrentWallHealthPlayerTwo--;
             }
 
 

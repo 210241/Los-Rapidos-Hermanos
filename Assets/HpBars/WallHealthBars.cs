@@ -19,11 +19,11 @@ public class WallHealthBars : MonoBehaviour
     void Start ()
     {
 
-        backgroundInstance1 = Instantiate(Background, new Vector3(-3.0f, 1f, 0f), GameMaster.noRotate);
-        foregroundRedInstance = Instantiate(ForegroundRed, new Vector3(-3f, 1, 0f), GameMaster.noRotate);
+        //backgroundInstance1 = Instantiate(Background, new Vector3(-3.0f, 1f, 0f), GameMaster.noRotate);
+        //foregroundRedInstance = Instantiate(ForegroundRed, new Vector3(-3f, 1, 0f), GameMaster.noRotate);
 
-        backgroundInstance2 = Instantiate(Background, new Vector3(3.0f, 5f, 0f), GameMaster.noRotate);
-        foregroundBlueInstance = Instantiate(ForegroundBlue, new Vector3(3f, 5f, 0f), GameMaster.noRotate);
+        //backgroundInstance2 = Instantiate(Background, new Vector3(3.0f, 5f, 0f), GameMaster.noRotate);
+        //foregroundBlueInstance = Instantiate(ForegroundBlue, new Vector3(3f, 5f, 0f), GameMaster.noRotate);
 
     }
 	
