@@ -28,13 +28,26 @@ public class Shooting : MonoBehaviour
         }
         else if(other.gameObject.tag == Tags.Wall.ToString())
         {
-            GameMaster.WallHealth--; 
-            if (GameMaster.WallHealth == 0)
+            if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
+            {
+                GameMaster.CurrentWallHealthPlayerOne--;
+                
+            }
+            else
+            {
+                GameMaster.CurrentWallHealthPlayerTwo--;
+            }
+
+
+
+            if (GameMaster.CurrentWallHealthPlayerOne == 0 && GameMaster.CurrentWallHealthPlayerTwo == 0) 
                 {
                     Destroy(other.gameObject);
+                    GameMaster.wallInstance = null;
                     GameMaster.IsWallOnTheScreen = false;
-                    GameMaster.WallHealth = 3;
-                }
+                    GameMaster.CurrentWallHealthPlayerOne = GameMaster.MaxWallHealth;
+                    GameMaster.CurrentWallHealthPlayerTwo = GameMaster.MaxWallHealth;
+            }
         }
 
 

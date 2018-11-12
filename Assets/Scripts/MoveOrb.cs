@@ -99,10 +99,6 @@ public class MoveOrb : MonoBehaviour
         {
             DestroyAppropriatePlayer();
         }
-
-
-
-
     }
 
     private void GhostOn()

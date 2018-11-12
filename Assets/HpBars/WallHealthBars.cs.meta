@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 428ef9fc2f6d1a74fa844b4753bf5355
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Background: {fileID: 4337233159685830, guid: 9f888f6d77cc20c46b4a5bf12a80606e,
+      type: 2}
+  - ForegroundRed: {fileID: 4213632754942190, guid: 5ff61bbbf36021149a6917bc0fad5827,
+      type: 2}
+  - ForegroundBlue: {fileID: 4251224007633408, guid: 6fe97591d4578af4780a3ed9f940f1d4,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

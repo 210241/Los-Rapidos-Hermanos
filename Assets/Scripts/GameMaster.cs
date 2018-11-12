@@ -36,6 +36,7 @@ public class GameMaster : MonoBehaviour
     public static int PlayerOneLives = 3;
     public static int PlayerTwoLives = 3;
 
+    public static Transform wallInstance;
 
     public static Quaternion noRotate = new Quaternion(0, 0, 0, 0);
     List<Transform> PossibleFloors = new List<Transform>();
@@ -50,9 +51,12 @@ public class GameMaster : MonoBehaviour
     public static Vector3 orbVelocity1;
     public static Vector3 orbVelocity2;
 
-    public static int WallHealth = 3;
-    //public static float StandardVerticalOrbPositon;
+    public static int MaxWallHealth = 5;
 
+    public static int CurrentWallHealthPlayerOne = 5;
+
+    public static int CurrentWallHealthPlayerTwo = 5;
+    //public static float StandardVerticalOrbPositon;
 
     public static bool startSpawningCactie = false;
 
@@ -132,7 +136,7 @@ public class GameMaster : MonoBehaviour
         if (floorsWithoutWall == 20)
         {
             IsWallOnTheScreen = true;
-            Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10), noRotate);
+            wallInstance = Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10), noRotate);
 
             floorsWithoutWall = 0;
         }
