@@ -33,6 +33,10 @@ public class GameMaster : MonoBehaviour
     public static int PlayerOneControlReversedMultiplier = 1;
     public static int PlayerTwoControlReversedMultiplier = 1;
 
+    public static int PlayerOneLives = 3;
+    public static int PlayerTwoLives = 3;
+
+
     public static Quaternion noRotate = new Quaternion(0, 0, 0, 0);
     List<Transform> PossibleFloors = new List<Transform>();
     Queue<Transform> ListOfFloors = new Queue<Transform>();
@@ -47,7 +51,7 @@ public class GameMaster : MonoBehaviour
     public static Vector3 orbVelocity2;
 
     public static int WallHealth = 3;
-    public static float StandardVerticalOrbPositon;
+    //public static float StandardVerticalOrbPositon;
 
 
     public static bool startSpawningCactie = false;
@@ -83,10 +87,7 @@ public class GameMaster : MonoBehaviour
         ListOfFloors.Enqueue(Instantiate(BasicFloor, new Vector3(0, 0, 0), noRotate));
         ListOfFloors.Enqueue(Instantiate(BasicFloor, new Vector3(0, 0, 5), noRotate));
 
-
-
         PopulatePossibleFloorsList();
-
 
         for (int i = 2; i < 10; i++)
         {

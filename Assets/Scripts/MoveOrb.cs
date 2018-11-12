@@ -226,11 +226,37 @@ public class MoveOrb : MonoBehaviour
     private void DestroyAppropriatePlayer()
     {
         var player = GetComponent<Rigidbody>().gameObject;
-        Destroy(player);
+        var position = player.GetComponent<Transform>().position;
+
         if (player.name == Players.PlayerOne.ToString())
-            GameMaster.PlayerOneIsAlive = false;
+        {
+            if (GameMaster.PlayerOneLives > 0)
+            {
+                GhostOn();
+                player.GetComponent<Transform>().position = new Vector3(0, 0.35f , position.z);
+                GameMaster.PlayerOneLives--;
+
+            }
+            else
+            {
+                Destroy(player);
+                GameMaster.PlayerOneIsAlive = false;
+            }
+        }
         else
-            GameMaster.PlayerTwoIsAlive = false;
+        {
+            if (GameMaster.PlayerTwoLives > 0)
+            {
+                GhostOn();
+                player.GetComponent<Transform>().position = new Vector3(0, 0.35f, position.z);
+                GameMaster.PlayerTwoLives--;
+            }
+            else
+            {
+                Destroy(player);
+                GameMaster.PlayerTwoIsAlive = false;
+            }
+        }
     }
 
 }
