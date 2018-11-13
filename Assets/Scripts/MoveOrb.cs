@@ -26,7 +26,7 @@ public class MoveOrb : MonoBehaviour
     private Coroutine zCoroutine;
     private float timer = 0;
 
-    public bool canJump;
+    public bool canJump = true;
     public bool canShoot;
 
     // Use this for initialization
@@ -50,6 +50,10 @@ public class MoveOrb : MonoBehaviour
         var orb = GetComponent<Rigidbody>();
         orb.velocity = new Vector3(horizVel, vertVel, 5 + zVel + zSpeed);
 
+        if (PauseMenu.GameIsPaused)
+        {
+            canJump = false;
+        }
 
         if (Input.GetKeyDown(jump) && canJump)
         {
