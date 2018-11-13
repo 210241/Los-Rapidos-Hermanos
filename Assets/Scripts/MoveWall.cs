@@ -47,10 +47,13 @@ public class MoveWall : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
-
-
-
-
     }
 
+    public void OnTriggerEnter(Collider other) {
+        if (other.gameObject.name == Players.PlayerOne.ToString() || other.gameObject.name == Players.PlayerTwo.ToString())
+        {
+            var position = other.gameObject.transform.position;
+            other.gameObject.transform.position = new Vector3(position.x, position.y, position.z - 5);
+        }
+    }
 }
