@@ -6,33 +6,35 @@ using UnityEngine;
 public class Shooting : MonoBehaviour
 {
 
-    public GameObject PlayerObject;
+	public GameObject PlayerObject;
+	private const float deathTime = 3.0f;
+	public float timer = 0.0f;
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<Rigidbody>().velocity = new Vector3(0,0,10);
+		GetComponent<Rigidbody>().velocity = new Vector3(0,0,10);
 
-    }
-
-    // Update is called once per frame
-    void Update () {
-		
 	}
 
-    private void OnCollisionEnter(Collision other)
-    {
-        if(other.gameObject.tag == Tags.Cactus.ToString())
+	// Update is called once per frame
+	void Update () {
+        Destroy(GetComponent<Rigidbody>().gameObject, deathTime);
+	}
+
+	private void OnCollisionEnter(Collision other)
+	{
+        if (other.gameObject.tag == Tags.Cactus.ToString())
         {
             Destroy(other.gameObject);
-           // Destroy(GetComponent<Rigidbody>().gameObject);
+            // Destroy(GetComponent<Rigidbody>().gameObject);
         }
-        else if(other.gameObject.tag == Tags.Wall.ToString())
+        else if (other.gameObject.tag == Tags.Wall.ToString())
         {
             if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
             {
-                if(GameMaster.CurrentWallHealthPlayerOne > 0)
+                if (GameMaster.CurrentWallHealthPlayerOne > 0)
                     GameMaster.CurrentWallHealthPlayerOne--;
-                
+
             }
             else
             {
@@ -42,19 +44,19 @@ public class Shooting : MonoBehaviour
 
 
 
-            if (GameMaster.CurrentWallHealthPlayerOne == 0 && GameMaster.CurrentWallHealthPlayerTwo == 0) 
-                {
-                    Destroy(other.gameObject);
-                    GameMaster.wallInstance = null;
-                    GameMaster.IsWallOnTheScreen = false;
-                    GameMaster.CurrentWallHealthPlayerOne = GameMaster.MaxWallHealth;
-                    GameMaster.CurrentWallHealthPlayerTwo = GameMaster.MaxWallHealth;
+            if (GameMaster.CurrentWallHealthPlayerOne == 0 && GameMaster.CurrentWallHealthPlayerTwo == 0)
+            {
+                Destroy(other.gameObject);
+                GameMaster.wallInstance = null;
+                GameMaster.IsWallOnTheScreen = false;
+                GameMaster.CurrentWallHealthPlayerOne = GameMaster.MaxWallHealth;
+                GameMaster.CurrentWallHealthPlayerTwo = GameMaster.MaxWallHealth;
             }
         }
 
 
-            Destroy(GetComponent<Rigidbody>().gameObject);
-    }
+			Destroy(GetComponent<Rigidbody>().gameObject);
+	}
 
 
-    }
+	}

@@ -83,10 +83,8 @@ public class GameMaster : MonoBehaviour
         mainCameraInstance = Instantiate(MainCamera, new Vector3(0f, 3.14f, -2.34f), noRotate);
         mainCameraInstance.transform.Rotate(42.15f, 0, 0);
 
-        orbInstancePlayer1 = Orb_Player1;//Instantiate(Orb_Player1, new Vector3(-1, 0, 0), noRotate);
-        orbInstancePlayer1.transform.position = new Vector3(-1, 0, 0);
-        orbInstancePlayer2 = Orb_Player2;//Instantiate(Orb_Player2, new Vector3(1, 0, 0), noRotate);
-        orbInstancePlayer1.transform.position = new Vector3(1, 0, 0);
+        orbInstancePlayer1 = Orb_Player1;
+        orbInstancePlayer2 = Orb_Player2;
         orbInstancePlayer1.name = Players.PlayerOne.ToString();
         orbInstancePlayer2.name = Players.PlayerTwo.ToString();
 

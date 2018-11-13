@@ -24,7 +24,6 @@ public class MoveOrb : MonoBehaviour
 
     private Coroutine slidingCoroutine;
     private Coroutine zCoroutine;
-    private float timer = 0;
 
     public bool canJump;
     public bool canShoot;
@@ -110,6 +109,9 @@ public class MoveOrb : MonoBehaviour
         GetComponent<Transform>().position = new Vector3(position.x, 0.3516032f, position.z);
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<SphereCollider>().isTrigger = true;
+        //var trans = 0.5f;
+        //var col = gameObject.GetComponent<Renderer>().material.color;
+        //col.a = trans;
         StartCoroutine(GhostOff());
     }
 
@@ -118,6 +120,9 @@ public class MoveOrb : MonoBehaviour
         yield return new WaitForSeconds(3f);
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<SphereCollider>().isTrigger = false;
+        //var trans = 1.0f;
+        //var col = gameObject.GetComponent<Renderer>().material.color;
+        //col.a = trans;
         canJump = true;
 
     }
