@@ -6,35 +6,40 @@ using EnumNamespace;
 public class MoveOrb : MonoBehaviour
 {
 
-    private int JUMP_VEL = 5;
-
-
+    private int JUMP_VEL;
     public KeyCode jump;
     public KeyCode shoot;
-    public float horizVel = 0;
-    public float vertVel = 0;
-    public float zVel = 0;
-    public float zSpeed = 0;
-    public int laneNum = 2;
-    public bool controlLocked = false;
+    public float horizVel;
+    public float vertVel;
+    public float zVel;
+    public float zSpeed;
+    public int laneNum;
+    public bool controlLocked;
     public Shooting Bullet;
-
-
-    private Vector3 BASE_GRAVITY = new Vector3(0f, -120.0F, 0f);
-
+    private Vector3 BASE_GRAVITY;
     private Coroutine slidingCoroutine;
     private Coroutine zCoroutine;
-    private float timer = 0;
-
-    public bool canJump = true;
+    private float timer;
+    public bool canJump;
     public bool canShoot;
 
     // Use this for initialization
     private void Start()
     {
+        BASE_GRAVITY = new Vector3(0f, -120.0F, 0f);
+        JUMP_VEL = 5;
+        horizVel = 0;
+        vertVel = 0;
+        zVel = 0;
+        zSpeed = 0;
+        laneNum = 2;
+        controlLocked = false;
+        timer = 0;
+        canJump = true;
         GameMaster.PlayerOnePoints = 0;
         GameMaster.PlayerTwoPoints = 0;
         Physics.gravity = BASE_GRAVITY;
+
     }
 
     void FixedUpdate()
@@ -137,7 +142,6 @@ public class MoveOrb : MonoBehaviour
         {
             GameMaster.PlayerTwoControlReversedMultiplier = -1; //true
             StartCoroutine(StopReverseMode());
-
         }
 
         if (GetComponent<Transform>().gameObject.name == Players.PlayerTwo.ToString())

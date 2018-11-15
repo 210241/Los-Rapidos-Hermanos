@@ -33,14 +33,14 @@ public class GameMaster : MonoBehaviour
     public static int PlayerOneControlReversedMultiplier;
     public static int PlayerTwoControlReversedMultiplier;
 
-    public static int PlayerOneLives = 3;
-    public static int PlayerTwoLives = 3;
+    public static int PlayerOneLives;
+    public static int PlayerTwoLives;
 
     public static Transform wallInstance;
 
-    public static Quaternion noRotate = new Quaternion(0, 0, 0, 0);
-    List<Transform> PossibleFloors = new List<Transform>();
-    Queue<Transform> ListOfFloors = new Queue<Transform>();
+    public static Quaternion noRotate;
+    List<Transform> PossibleFloors;
+    Queue<Transform> ListOfFloors;
 
     private Transform orbInstancePlayer1;
     private Transform orbInstancePlayer2;
@@ -51,16 +51,12 @@ public class GameMaster : MonoBehaviour
     public static Vector3 orbVelocity1;
     public static Vector3 orbVelocity2;
 
-    public static int MaxWallHealth = 5;
+    public static int MaxWallHealth;
+    public static int CurrentWallHealthPlayerOne;
+    public static int CurrentWallHealthPlayerTwo;
 
-    public static int CurrentWallHealthPlayerOne = 5;
+    public static bool startSpawningCactie;
 
-    public static int CurrentWallHealthPlayerTwo = 5;
-    //public static float StandardVerticalOrbPositon;
-
-    public static bool startSpawningCactie = false;
-
-    //private Random random = new Random();
     private void PopulatePossibleFloorsList()
     {
         PossibleFloors.Add(BasicFloor);
@@ -78,17 +74,31 @@ public class GameMaster : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        noRotate = new Quaternion(0, 0, 0, 0);
+        PossibleFloors = new List<Transform>();
+        ListOfFloors = new Queue<Transform>();
+
         startSpawningCactie = false;
-        PlayerOneIsAlive = true;
-        PlayerTwoIsAlive = true;
         IsWallOnTheScreen = false;
-        PlayerOneControlReversedMultiplier = 1;
-        PlayerTwoControlReversedMultiplier = 1;
+
         mainCameraInstance = Instantiate(MainCamera, new Vector3(0f, 3.14f, -2.34f), noRotate);
         mainCameraInstance.transform.Rotate(42.15f, 0, 0);
 
+        PlayerOneControlReversedMultiplier = 1;
+        PlayerTwoControlReversedMultiplier = 1;
+
+        PlayerOneIsAlive = true;
+        PlayerTwoIsAlive = true;
+
+        PlayerOneLives = 3;
+        PlayerTwoLives = 3;
+        MaxWallHealth = 5;
+        CurrentWallHealthPlayerOne = 5;
+        CurrentWallHealthPlayerTwo = 5;
+
         orbInstancePlayer1 = Instantiate(Orb_Player1, new Vector3(-1, 0, 0), noRotate);
         orbInstancePlayer2 = Instantiate(Orb_Player2, new Vector3(1, 0, 0), noRotate);
+
         orbInstancePlayer1.name = Players.PlayerOne.ToString();
         orbInstancePlayer2.name = Players.PlayerTwo.ToString();
 
@@ -142,7 +152,7 @@ public class GameMaster : MonoBehaviour
         if (floorsWithoutWall == 20)
         {
             IsWallOnTheScreen = true;
-            wallInstance = Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10), noRotate);
+              wallInstance = Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10), noRotate);
 
             floorsWithoutWall = 0;
         }

@@ -28,7 +28,7 @@ public class Shooting : MonoBehaviour
         }
         else if(other.gameObject.tag == Tags.Wall.ToString())
         {
-            if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
+            if (PlayerObject.name == Players.PlayerOne.ToString())
             {
                 if(GameMaster.CurrentWallHealthPlayerOne > 0)
                     GameMaster.CurrentWallHealthPlayerOne--;

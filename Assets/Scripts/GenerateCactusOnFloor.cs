@@ -7,13 +7,16 @@ public class GenerateCactusOnFloor : MonoBehaviour
 
     public Transform Cactus;
 
-    private Quaternion noRotate = new Quaternion(0, 0, 0, 0);
+    private Quaternion noRotate;
 
-    private List<Transform> Cactie = new List<Transform>();
+    private List<Transform> Cactie;
 
     // Use this for initialization
     void Start()
     {
+        noRotate = new Quaternion(0, 0, 0, 0);
+        Cactie = new List<Transform>();
+
         if (!GameMaster.IsWallOnTheScreen && GameMaster.startSpawningCactie)
         {
             var position = GetComponent<Transform>().position;

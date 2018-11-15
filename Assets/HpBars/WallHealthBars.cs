@@ -19,11 +19,11 @@ public class WallHealthBars : MonoBehaviour
     void Start ()
     {
 
-        //backgroundInstance1 = Instantiate(Background, new Vector3(-3.0f, 1f, 0f), GameMaster.noRotate);
-        //foregroundRedInstance = Instantiate(ForegroundRed, new Vector3(-3f, 1, 0f), GameMaster.noRotate);
+        backgroundInstance1 = Instantiate(Background, new Vector3(-3.0f, 1f, -1f), GameMaster.noRotate);
+        foregroundRedInstance = Instantiate(ForegroundRed, new Vector3(-3f, 1, -1f), GameMaster.noRotate);
 
-        //backgroundInstance2 = Instantiate(Background, new Vector3(3.0f, 5f, 0f), GameMaster.noRotate);
-        //foregroundBlueInstance = Instantiate(ForegroundBlue, new Vector3(3f, 5f, 0f), GameMaster.noRotate);
+        backgroundInstance2 = Instantiate(Background, new Vector3(3.0f, 5f, -1f), GameMaster.noRotate);
+        foregroundBlueInstance = Instantiate(ForegroundBlue, new Vector3(3f, 5f, -1f), GameMaster.noRotate);
 
     }
 	
@@ -51,7 +51,7 @@ public class WallHealthBars : MonoBehaviour
             }
         }
 
-
+	   
         backgroundInstance1.GetComponent<Transform>().position = new Vector3(-3f, 1f, GameMaster.wallInstance.transform.position.z - 1f + 0.1f);
         foregroundRedInstance.GetComponent<Transform>().position = new Vector3(-3f, 1f, GameMaster.wallInstance.transform.position.z - 1f);
 
@@ -62,6 +62,6 @@ public class WallHealthBars : MonoBehaviour
         foregroundRedInstance.GetComponent<Transform>().localScale = new Vector3(ratioRed, 0.2f, 0.1f);
 
 	    float ratioBlue = ((float)GameMaster.CurrentWallHealthPlayerTwo / (float)GameMaster.MaxWallHealth);
-	    foregroundRedInstance.GetComponent<Transform>().localScale = new Vector3(ratioBlue, 0.2f, 0.1f);
+	    foregroundBlueInstance.GetComponent<Transform>().localScale = new Vector3(ratioBlue, 0.2f, 0.1f);
     }
 }

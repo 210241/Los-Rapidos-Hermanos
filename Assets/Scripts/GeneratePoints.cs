@@ -8,13 +8,14 @@ public class GeneratePoints : MonoBehaviour
 
     public Transform Point;
     private Transform bottleInstance;
-
-    private Quaternion noRotate = new Quaternion(0, 0, 0, 0);
+    private Quaternion noRotate;
 
 
     // Use this for initialization
     void Start()
     {
+        noRotate = new Quaternion(0, 0, 0, 0);
+
         if (!GameMaster.IsWallOnTheScreen)
         {
             var position = GetComponent<Transform>().position;
