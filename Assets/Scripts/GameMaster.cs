@@ -26,12 +26,12 @@ public class GameMaster : MonoBehaviour
     public static int PlayerOnePoints;
     public static int PlayerTwoPoints;
 
-    public static bool PlayerOneIsAlive = true;
-    public static bool PlayerTwoIsAlive = true;
-    public static bool IsWallOnTheScreen = false;
+    public static bool PlayerOneIsAlive;
+    public static bool PlayerTwoIsAlive;
+    public static bool IsWallOnTheScreen;
 
-    public static int PlayerOneControlReversedMultiplier = 1;
-    public static int PlayerTwoControlReversedMultiplier = 1;
+    public static int PlayerOneControlReversedMultiplier;
+    public static int PlayerTwoControlReversedMultiplier;
 
     public static Quaternion noRotate = new Quaternion(0, 0, 0, 0);
     List<Transform> PossibleFloors = new List<Transform>();
@@ -71,7 +71,11 @@ public class GameMaster : MonoBehaviour
     void Start()
     {
         startSpawningCactie = false;
-
+        PlayerOneIsAlive = true;
+        PlayerTwoIsAlive = true;
+        IsWallOnTheScreen = false;
+        PlayerOneControlReversedMultiplier = 1;
+        PlayerTwoControlReversedMultiplier = 1;
         mainCameraInstance = Instantiate(MainCamera, new Vector3(0f, 3.14f, -2.34f), noRotate);
         mainCameraInstance.transform.Rotate(42.15f, 0, 0);
 
@@ -101,10 +105,12 @@ public class GameMaster : MonoBehaviour
         if (orbInstancePlayer1 == null)
         {
             orbInstancePlayer1 = orbInstancePlayer2;
+            GameOver.Game_Over();
         }
         if (orbInstancePlayer2 == null)
         {
             orbInstancePlayer2 = orbInstancePlayer1;
+            GameOver.Game_Over();
         }
 
         if (orbInstancePlayer1.position.z > ListOfFloors.Peek().position.z + 20)
