@@ -26,6 +26,7 @@ public class GameMaster : MonoBehaviour
     public Transform Orb_Player1;
     public Transform Orb_Player2;
     public Transform Wall;
+    public Transform Fog;
 
     public static int PlayerOnePoints;
     public static int PlayerTwoPoints;
@@ -46,6 +47,7 @@ public class GameMaster : MonoBehaviour
     List<Transform> PossibleFloors;
     Queue<Transform> ListOfFloors;
 
+    private Transform fogInstance;
     private Transform orbInstancePlayer1;
     private Transform orbInstancePlayer2;
     private Camera mainCameraInstance;
@@ -74,9 +76,9 @@ public class GameMaster : MonoBehaviour
         Orb_Player1 = Resources.Load<Transform>("Sphere");
         Orb_Player2 = Resources.Load<Transform>("Sphere2");
         Wall = Resources.Load<Transform>("Cube");
+        Fog = Resources.Load<Transform>("Fog");
 
         MainCamera = Resources.Load<Camera>("Main Camera");
-
 
         noRotate = new Quaternion(0, 0, 0, 0);
         PossibleFloors = new List<Transform>();
@@ -88,7 +90,6 @@ public class GameMaster : MonoBehaviour
         CrossHoleFloor.name = Floor.CrossHoleFloor.ToString(); ;
         BigCrossHoleFloor.name = Floor.BigCrossHoleFloor.ToString(); ;
         SatelliteHoleFloor.name = Floor.SatelliteHoleFloor.ToString(); ;
-
 
         startSpawningCactie = false;
         IsWallOnTheScreen = false;
@@ -129,6 +130,9 @@ public class GameMaster : MonoBehaviour
             floor3.name = floorTransform.Item2.ToString();
             ListOfFloors.Enqueue(floor3);
         }
+
+        fogInstance = Instantiate(Fog, new Vector3(0, 0, 40), noRotate);
+
     }
 
     private Assets.Scripts.Tuple<Transform,Floor> GetFloor()
@@ -165,6 +169,9 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        var playerPosition = orbInstancePlayer1.position;
+
+        fogInstance.position = new Vector3(0, 2.5f, playerPosition.z + 25.0f);
 
         startSpawningCactie = true;
         if (orbInstancePlayer1 == null)
@@ -207,7 +214,7 @@ public class GameMaster : MonoBehaviour
         if (floorsWithoutWall >= 20)
         {
             IsWallOnTheScreen = true;
-            wallInstance = Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10), noRotate);
+            wallInstance = Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 25), noRotate);
 
             floorsWithoutWall = 0;
         }
