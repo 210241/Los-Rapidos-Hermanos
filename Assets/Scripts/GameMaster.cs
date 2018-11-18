@@ -1,10 +1,15 @@
-﻿using EnumNamespace;
+﻿using System;
+using EnumNamespace;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Timers;
+using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameMaster : MonoBehaviour
 {
@@ -18,7 +23,6 @@ public class GameMaster : MonoBehaviour
     public Transform BigCrossHoleFloor;
     public Transform SatelliteHoleFloor;
     public Transform BaseCactus;
-    public Transform Perk;
     public Transform Orb_Player1;
     public Transform Orb_Player2;
     public Transform Wall;
@@ -47,42 +51,50 @@ public class GameMaster : MonoBehaviour
     private Camera mainCameraInstance;
     private int floorsWithoutWall;
 
-    public static Vector3 AvgOrbsVelocity; 
+    public static Vector3 AvgOrbsVelocity;
     public static Vector3 orbVelocity1;
     public static Vector3 orbVelocity2;
-
+    public static Stopwatch timer;
     public static int MaxWallHealth;
     public static int CurrentWallHealthPlayerOne;
     public static int CurrentWallHealthPlayerTwo;
 
     public static bool startSpawningCactie;
 
-    private void PopulatePossibleFloorsList()
-    {
-        PossibleFloors.Add(BasicFloor);
-        PossibleFloors.Add(CrossHoleFloor);
-        PossibleFloors.Add(BigCrossHoleFloor);
-        PossibleFloors.Add(SatelliteHoleFloor);
-    }
-
-    private Transform GetRandomBlock()
-    {
-        int randInt = Random.Range(0, PossibleFloors.Count);
-        return PossibleFloors[randInt];
-    }
 
     // Use this for initialization
     void Start()
     {
+        BasicFloor = Resources.Load<Transform>("Floor/BasicFloorBlock(5x5)");
+        CrossHoleFloor = Resources.Load<Transform>("Floor/CrossHoleFloorBlock(5x5)");
+        BigCrossHoleFloor = Resources.Load<Transform>("Floor/BigCrossHoleFloorBlock(5x5)");
+        SatelliteHoleFloor = Resources.Load<Transform>("Floor/SatelliteHoleFloorBlock(5x5)");
+
+        BaseCactus = Resources.Load<Transform>("BasicCactus");
+        Orb_Player1 = Resources.Load<Transform>("Sphere");
+        Orb_Player2 = Resources.Load<Transform>("Sphere2");
+        Wall = Resources.Load<Transform>("Cube");
+
+        MainCamera = Resources.Load<Camera>("Main Camera");
+
+
         noRotate = new Quaternion(0, 0, 0, 0);
         PossibleFloors = new List<Transform>();
         ListOfFloors = new Queue<Transform>();
+        timer = new Stopwatch();
+        timer.Start();
+
+        BasicFloor.name = Floor.BasicFloor.ToString();
+        CrossHoleFloor.name = Floor.CrossHoleFloor.ToString(); ;
+        BigCrossHoleFloor.name = Floor.BigCrossHoleFloor.ToString(); ;
+        SatelliteHoleFloor.name = Floor.SatelliteHoleFloor.ToString(); ;
+
 
         startSpawningCactie = false;
         IsWallOnTheScreen = false;
 
         mainCameraInstance = Instantiate(MainCamera, new Vector3(0f, 3.14f, -2.34f), noRotate);
-        mainCameraInstance.transform.Rotate(42.15f, 0, 0);
+        mainCameraInstance.transform.Rotate(32.15f, 0, 0);
 
         PlayerOneControlReversedMultiplier = 1;
         PlayerTwoControlReversedMultiplier = 1;
@@ -101,21 +113,59 @@ public class GameMaster : MonoBehaviour
 
         orbInstancePlayer1.name = Players.PlayerOne.ToString();
         orbInstancePlayer2.name = Players.PlayerTwo.ToString();
+        var floor1 = Instantiate(BasicFloor, new Vector3(0, 0, 0), noRotate);
+        var floor2 = Instantiate(BasicFloor, new Vector3(0, 0, 5), noRotate);
+        floor1.name= Floor.BasicFloor.ToString();
+        floor2.name= Floor.BasicFloor.ToString();
+        ListOfFloors.Enqueue(floor1);
+        ListOfFloors.Enqueue(floor2);
 
-        ListOfFloors.Enqueue(Instantiate(BasicFloor, new Vector3(0, 0, 0), noRotate));
-        ListOfFloors.Enqueue(Instantiate(BasicFloor, new Vector3(0, 0, 5), noRotate));
-
-        PopulatePossibleFloorsList();
+        //PopulatePossibleFloorsList();
 
         for (int i = 2; i < 10; i++)
         {
-            ListOfFloors.Enqueue(Instantiate(GetRandomBlock(), new Vector3(0, 0, i * 5), noRotate));
+            Assets.Scripts.Tuple<Transform, Floor> floorTransform = GetFloor();
+            var floor3 = Instantiate(floorTransform.Item1, new Vector3(0, 0, i * 5), noRotate);
+            floor3.name = floorTransform.Item2.ToString();
+            ListOfFloors.Enqueue(floor3);
+        }
+    }
+
+    private Assets.Scripts.Tuple<Transform,Floor> GetFloor()
+    {
+        int counter = 0;
+        int probabilityCounter = 0;
+        var childrenMap = StaticMappings.FloorNameToChildrenMap[ListOfFloors.Last().name].Select(t =>
+        {
+            counter += t.Item2;
+            return new Assets.Scripts.Tuple<Floor, int>(t.Item1, t.Item2);
+        }).ToList();
+        int rand = Random.Range(0, counter);
+        Floor chosenFloor = childrenMap.Find(elem =>
+        {
+            probabilityCounter += elem.Item2;
+            return probabilityCounter >= rand;
+        }).Item1;
+
+        switch (chosenFloor)
+        {
+            case Floor.BasicFloor:
+                return new Assets.Scripts.Tuple<Transform, Floor>( BasicFloor,Floor.BasicFloor);
+            case Floor.CrossHoleFloor:
+                return new Assets.Scripts.Tuple<Transform, Floor>(CrossHoleFloor, Floor.CrossHoleFloor);
+            case Floor.BigCrossHoleFloor:
+                return new Assets.Scripts.Tuple<Transform, Floor>(BigCrossHoleFloor, Floor.BigCrossHoleFloor);
+            case Floor.SatelliteHoleFloor:
+                return new Assets.Scripts.Tuple<Transform, Floor>(SatelliteHoleFloor, Floor.SatelliteHoleFloor);
+            default:
+                return new Assets.Scripts.Tuple<Transform, Floor>(BasicFloor, Floor.BasicFloor);
         }
     }
 
     // Update is called once per frame
     private void Update()
     {
+
         startSpawningCactie = true;
         if (orbInstancePlayer1 == null)
         {
@@ -130,9 +180,14 @@ public class GameMaster : MonoBehaviour
 
         if (orbInstancePlayer1.position.z > ListOfFloors.Peek().position.z + 20)
         {
+
             var firstFloor = ListOfFloors.Dequeue();
             Destroy(firstFloor.gameObject);
-            ListOfFloors.Enqueue(Instantiate(GetRandomBlock(), new Vector3(0, 0, orbInstancePlayer1.position.z + 25), noRotate));
+            var floorTransform = GetFloor();
+            var floor = Instantiate(floorTransform.Item1, new Vector3(0, 0, orbInstancePlayer1.position.z + 25),
+                noRotate);
+            floor.name = floorTransform.Item2.ToString();
+            ListOfFloors.Enqueue(floor);
 
             if (!IsWallOnTheScreen)
                 floorsWithoutWall++;
@@ -149,10 +204,10 @@ public class GameMaster : MonoBehaviour
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
 
-        if (floorsWithoutWall == 20)
+        if (floorsWithoutWall >= 20)
         {
             IsWallOnTheScreen = true;
-              wallInstance = Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10), noRotate);
+            wallInstance = Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 10), noRotate);
 
             floorsWithoutWall = 0;
         }

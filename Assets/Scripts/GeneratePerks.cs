@@ -24,9 +24,10 @@ public class GeneratePerks : MonoBehaviour
         if (!GameMaster.IsWallOnTheScreen)
         {
             var position = GetComponent<Transform>().position;
+            var randRange = Random.Range(0, 30);
 
             #region ReverseControls
-            if (Random.Range(0, 10) == 1)
+            if (randRange == 1)
             {
                 var posX = position.x + Random.Range(-2, 3);
                 var posY = position.y + 0.7f;
@@ -43,7 +44,7 @@ public class GeneratePerks : MonoBehaviour
             #endregion
 
             #region BlockShooting
-            if (Random.Range(0, 10) == 2)
+            if (randRange == 2)
             {
                 var posX = position.x + Random.Range(-2, 3);
                 var posY = position.y + 0.7f;
@@ -60,7 +61,7 @@ public class GeneratePerks : MonoBehaviour
             #endregion
 
             #region Ghost
-            if (Random.Range(0, 10) == 1)
+            if (randRange == 3)
             {
                 var posX = position.x + Random.Range(-2, 3);
                 var posY = position.y + (float)0.5;
@@ -79,7 +80,7 @@ public class GeneratePerks : MonoBehaviour
             #endregion
 
             #region TacoSpeed
-            if (Random.Range(0, 10) == 1)
+            if (randRange == 4)
             {
                 var posX = position.x + Random.Range(-2, 3);
                 var posY = position.y + (float)0.5;

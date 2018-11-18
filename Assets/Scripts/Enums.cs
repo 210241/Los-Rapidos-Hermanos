@@ -43,8 +43,17 @@ namespace EnumNamespace
         ForwardBackwardPadOne,
         LeftRightPadTwo,
         ForwardBackwardPadTwo
+    }
 
-
+    public enum Floor
+    {
+        BasicFloor,
+        CrossHoleFloor,
+        BigCrossHoleFloor,
+        SatelliteHoleFloor,
+        SingleHorizontalSlidingFloor,
+        DoubleHorizontalSlidingFloor,
+        DoubleBasicFloor
     }
 
 }

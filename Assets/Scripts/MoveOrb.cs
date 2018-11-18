@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Security.Policy;
+using System.Threading;
+using System.Timers;
 using UnityEngine;
 using EnumNamespace;
 
@@ -12,7 +14,7 @@ public class MoveOrb : MonoBehaviour
     public float horizVel;
     public float vertVel;
     public float zVel;
-    public float zSpeed;
+    public static float zSpeed;
     public int laneNum;
     public bool controlLocked;
     public Shooting Bullet;
@@ -22,6 +24,8 @@ public class MoveOrb : MonoBehaviour
     private float timer;
     public bool canJump;
     public bool canShoot;
+    public bool ghostOn;
+    public long timerGhost;
 
     // Use this for initialization
     private void Start()
@@ -53,7 +57,7 @@ public class MoveOrb : MonoBehaviour
         handleSideMovementPad();
 
         var orb = GetComponent<Rigidbody>();
-        orb.velocity = new Vector3(horizVel, vertVel, 5 + zVel + zSpeed);
+        orb.velocity = new Vector3(horizVel, vertVel, 10 + zVel + zSpeed);
 
         if (PauseMenu.GameIsPaused)
         {
@@ -76,6 +80,12 @@ public class MoveOrb : MonoBehaviour
         if (GetComponent<Transform>().position.y < 0)
         {
             DestroyAppropriatePlayer();
+        }
+        if (ghostOn)
+        {
+            timerGhost++;
+            if (timerGhost % 15 == 0)
+                GetComponent<Renderer>().enabled = !GetComponent<Renderer>().enabled;
         }
 
     }
@@ -112,12 +122,12 @@ public class MoveOrb : MonoBehaviour
 
     private void GhostOn()
     {
-        canJump = false;
-
+        //canJump = false;
+        ghostOn = true;
         vertVel = 0;
         var position = GetComponent<Transform>().position;
         GetComponent<Transform>().position = new Vector3(position.x, 0.3516032f, position.z);
-        GetComponent<Rigidbody>().useGravity = false;
+        //GetComponent<Rigidbody>().useGravity = false;
         GetComponent<SphereCollider>().isTrigger = true;
         StartCoroutine(GhostOff());
     }
@@ -127,7 +137,8 @@ public class MoveOrb : MonoBehaviour
         yield return new WaitForSeconds(3f);
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<SphereCollider>().isTrigger = false;
-        canJump = true;
+        //canJump = true;
+        ghostOn = false;
 
     }
 
@@ -138,6 +149,7 @@ public class MoveOrb : MonoBehaviour
     }
     private void ReverseMove()
     {
+
         if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
         {
             GameMaster.PlayerTwoControlReversedMultiplier = -1; //true
@@ -171,14 +183,14 @@ public class MoveOrb : MonoBehaviour
         if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
         {
             horizVel = 2 * Input.GetAxis(Axis.LeftRightPadOne.ToString()) * GameMaster.PlayerOneControlReversedMultiplier;
-            zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadOne.ToString());
+            //zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadOne.ToString());
 
         }
 
         if (GetComponent<Transform>().gameObject.name == Players.PlayerTwo.ToString())
         {
             horizVel = 2 * Input.GetAxis(Axis.LeftRightPadTwo.ToString()) * GameMaster.PlayerTwoControlReversedMultiplier;
-            zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadTwo.ToString());
+            //zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadTwo.ToString());
         }
     }
 
@@ -237,7 +249,7 @@ public class MoveOrb : MonoBehaviour
             if (GameMaster.PlayerOneLives > 0)
             {
                 GhostOn();
-                player.GetComponent<Transform>().position = new Vector3(0, 0.35f , position.z);
+                player.GetComponent<Transform>().position = new Vector3(0, 0.35f, position.z);
                 GameMaster.PlayerOneLives--;
 
             }
@@ -260,6 +272,16 @@ public class MoveOrb : MonoBehaviour
                 Destroy(player);
                 GameMaster.PlayerTwoIsAlive = false;
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == Tags.Ground.ToString())
+        {
+            var positionOrb = GetComponent<Transform>().position;
+            GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
+            canJump = true;
         }
     }
 

@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 64468942635132326}
   - component: {fileID: 111431169460066114}
   m_Layer: 0
-  m_Name: Scaled_cactus(0.8)
+  m_Name: BasicCactus
   m_TagString: Cactus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
