@@ -26,6 +26,7 @@ public class MoveOrb : MonoBehaviour
     public bool canShoot;
     public bool ghostOn;
     public long timerGhost;
+    public float slow;
 
     // Use this for initialization
     private void Start()
@@ -57,7 +58,7 @@ public class MoveOrb : MonoBehaviour
         handleSideMovementPad();
 
         var orb = GetComponent<Rigidbody>();
-        orb.velocity = new Vector3(horizVel, vertVel, 10 + zVel + zSpeed);
+        orb.velocity = new Vector3(horizVel, vertVel, 10 + zVel + zSpeed + slow);
 
         if (PauseMenu.GameIsPaused)
         {
@@ -118,6 +119,23 @@ public class MoveOrb : MonoBehaviour
         {
             DestroyAppropriatePlayer();
         }
+
+        if (other.gameObject.tag == Objects.Bullet.ToString())
+        {
+            SlowOn();
+        }
+    }
+
+    private void SlowOn()
+    {
+        slow = -5f;
+        StartCoroutine(SlowOff());
+    }
+
+    private IEnumerator SlowOff()
+    {
+        yield return new WaitForSeconds(1f);
+        slow = 0f;
     }
 
     private void GhostOn()
@@ -182,14 +200,14 @@ public class MoveOrb : MonoBehaviour
     {
         if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
         {
-            horizVel = 2 * Input.GetAxis(Axis.LeftRightPadOne.ToString()) * GameMaster.PlayerOneControlReversedMultiplier;
+            horizVel = 2 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadOne.ToString())) * GameMaster.PlayerOneControlReversedMultiplier;
             //zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadOne.ToString());
 
         }
 
         if (GetComponent<Transform>().gameObject.name == Players.PlayerTwo.ToString())
         {
-            horizVel = 2 * Input.GetAxis(Axis.LeftRightPadTwo.ToString()) * GameMaster.PlayerTwoControlReversedMultiplier;
+            horizVel = 2 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadTwo.ToString())) * GameMaster.PlayerTwoControlReversedMultiplier;
             //zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadTwo.ToString());
         }
     }

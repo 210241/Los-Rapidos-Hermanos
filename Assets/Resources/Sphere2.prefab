@@ -125,6 +125,7 @@ MonoBehaviour:
   canShoot: 1
   ghostOn: 0
   timerGhost: 0
+  slow: 0
 --- !u!135 &135297109519913574
 SphereCollider:
   m_ObjectHideFlags: 1
