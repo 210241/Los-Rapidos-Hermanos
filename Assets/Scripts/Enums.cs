@@ -42,7 +42,9 @@ namespace EnumNamespace
         LeftRightPadOne,
         ForwardBackwardPadOne,
         LeftRightPadTwo,
-        ForwardBackwardPadTwo
+        ForwardBackwardPadTwo,
+        PrimaryAttackOne,
+        PrimaryAttackTwo
     }
 
     public enum Floor
@@ -53,7 +55,7 @@ namespace EnumNamespace
         SatelliteHoleFloor,
         SingleHorizontalSlidingFloor,
         DoubleHorizontalSlidingFloor,
-        DoubleBasicFloor
+        DoubleBasicFloor,        
     }
 
 }

@@ -56,6 +56,7 @@ public class MoveOrb : MonoBehaviour
     {
         HandleStaticPoints();
         handleSideMovementPad();
+        HandleShootingTrigger();
 
         var orb = GetComponent<Rigidbody>();
         orb.velocity = new Vector3(horizVel, vertVel, 10 + zVel + zSpeed + slow);
@@ -71,12 +72,12 @@ public class MoveOrb : MonoBehaviour
             vertVel = JUMP_VEL;
             StartCoroutine(stopJump());
         }
-        if (Input.GetKeyDown(shoot) && canShoot)
-        {
-            var position = GetComponent<Transform>().position;
-            var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
-            bullet.PlayerObject = GetComponent<Transform>().gameObject;
-        }
+        //if (Input.GetKeyDown(shoot) && canShoot)
+        //{
+        //    var position = GetComponent<Transform>().position;
+        //    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
+        //    bullet.PlayerObject = GetComponent<Transform>().gameObject;
+        //}
 
         if (GetComponent<Transform>().position.y < 0)
         {
@@ -218,6 +219,31 @@ public class MoveOrb : MonoBehaviour
         {
             horizVel = 2 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadTwo.ToString())) * GameMaster.PlayerTwoControlReversedMultiplier;
             //zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadTwo.ToString());
+        }
+    }
+
+    private void HandleShootingTrigger()
+    {
+        var transform = GetComponent<Transform>();
+        if (transform.gameObject.name == Players.PlayerOne.ToString())
+        {
+            if (Input.GetAxis(Axis.PrimaryAttackOne.ToString()) > 0)
+            {
+                var position = transform.position;
+                var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
+                bullet.PlayerObject = transform.gameObject;
+            }
+
+        }
+
+        if (transform.gameObject.name == Players.PlayerTwo.ToString())
+        {
+            if (Input.GetAxis(Axis.PrimaryAttackTwo.ToString()) > 0)
+            {
+                var position = transform.position;
+                var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
+                bullet.PlayerObject = transform.gameObject;
+            }
         }
     }
 
