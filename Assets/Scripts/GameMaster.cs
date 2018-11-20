@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Timers;
 using Assets.Scripts;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -27,6 +28,7 @@ public class GameMaster : MonoBehaviour
     public Transform Orb_Player2;
     public Transform Wall;
     public Transform Fog;
+    public Transform BlobShadowProjector;
 
     public static int PlayerOnePoints;
     public static int PlayerTwoPoints;
@@ -51,6 +53,8 @@ public class GameMaster : MonoBehaviour
     private Transform orbInstancePlayer1;
     private Transform orbInstancePlayer2;
     private Camera mainCameraInstance;
+    private Transform blobShadowProjectorPlayerOne;
+    private Transform blobShadowProjectorPlayerTwo;
     private int floorsWithoutWall;
 
     public static Vector3 AvgOrbsVelocity;
@@ -79,6 +83,7 @@ public class GameMaster : MonoBehaviour
         Fog = Resources.Load<Transform>("Fog");
 
         MainCamera = Resources.Load<Camera>("Main Camera");
+        BlobShadowProjector = Resources.Load<Transform>("Projectors/Prefabs/BlobShadowProjector");
 
         noRotate = new Quaternion(0, 0, 0, 0);
         PossibleFloors = new List<Transform>();
@@ -112,6 +117,9 @@ public class GameMaster : MonoBehaviour
         orbInstancePlayer1 = Instantiate(Orb_Player1, new Vector3(-1, 0, 0), noRotate);
         orbInstancePlayer2 = Instantiate(Orb_Player2, new Vector3(1, 0, 0), noRotate);
 
+        blobShadowProjectorPlayerOne = Instantiate(BlobShadowProjector, new Vector3(-1, 0, 0), noRotate);
+        blobShadowProjectorPlayerTwo = Instantiate(BlobShadowProjector, new Vector3(1, 0, 0), noRotate);
+
         orbInstancePlayer1.name = Players.PlayerOne.ToString();
         orbInstancePlayer2.name = Players.PlayerTwo.ToString();
         var floor1 = Instantiate(BasicFloor, new Vector3(0, 0, 0), noRotate);
@@ -132,6 +140,18 @@ public class GameMaster : MonoBehaviour
         }
 
         fogInstance = Instantiate(Fog, new Vector3(0, 0, 40), noRotate);
+
+        orbInstancePlayer1.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+        orbInstancePlayer2.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+
+        orbInstancePlayer1.gameObject.layer = 2;
+        orbInstancePlayer2.gameObject.layer = 2;
+
+        blobShadowProjectorPlayerOne.GetComponent<Transform>().Rotate(90,0,0);
+        blobShadowProjectorPlayerTwo.GetComponent<Transform>().Rotate(90, 0, 0);
+
+        blobShadowProjectorPlayerOne.GetComponent<Projector>().ignoreLayers = (1 << 2);
+        blobShadowProjectorPlayerTwo.GetComponent<Projector>().ignoreLayers = (1 << 2);
 
     }
 
@@ -164,14 +184,20 @@ public class GameMaster : MonoBehaviour
             default:
                 return new Assets.Scripts.Tuple<Transform, Floor>(BasicFloor, Floor.BasicFloor);
         }
+
     }
 
     // Update is called once per frame
     private void Update()
     {
-        var playerPosition = orbInstancePlayer1.position;
+        
+        var playerOnePosition = orbInstancePlayer1.position;
+        var playerTwoPosition = orbInstancePlayer2.position;
 
-        fogInstance.position = new Vector3(0, 2.5f, playerPosition.z + 25.0f);
+        blobShadowProjectorPlayerOne.GetComponent<Transform>().position = playerOnePosition;
+        blobShadowProjectorPlayerTwo.GetComponent<Transform>().position = playerTwoPosition;
+
+        fogInstance.position = new Vector3(0, 2.5f, playerOnePosition.z + 25.0f);
 
         startSpawningCactie = true;
         //if (orbInstancePlayer2 == null || orbInstancePlayer1 == null)
