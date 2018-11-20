@@ -48,11 +48,11 @@ public class MoveWall : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if (other.gameObject.name == Players.PlayerOne.ToString() ||
-            other.gameObject.name == Players.PlayerTwo.ToString())
-        {
-            Destroy(other.gameObject);
-        }
+        //if (other.gameObject.name == Players.PlayerOne.ToString() ||
+        //    other.gameObject.name == Players.PlayerTwo.ToString())
+        //{
+        //    Destroy(other.gameObject);
+        //}
     }
 
     public void OnTriggerEnter(Collider other) {
