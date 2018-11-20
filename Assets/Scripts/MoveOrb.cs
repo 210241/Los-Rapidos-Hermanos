@@ -88,6 +88,10 @@ public class MoveOrb : MonoBehaviour
             if (timerGhost % 15 == 0)
                 GetComponent<Renderer>().enabled = !GetComponent<Renderer>().enabled;
         }
+        else
+        {
+            GetComponent<Renderer>().enabled = true;
+        }
 
     }
     private void OnCollisionEnter(Collision other)
@@ -95,6 +99,11 @@ public class MoveOrb : MonoBehaviour
         if (other.gameObject.tag == Tags.Ground.ToString())
         {
             canJump = true;
+        }
+
+        if (other.gameObject.tag == Tags.Wall.ToString())
+        {
+            DestroyAppropriatePlayer();
         }
 
         if (other.gameObject.tag == Tags.Perk.ToString())
@@ -273,8 +282,7 @@ public class MoveOrb : MonoBehaviour
             }
             else
             {
-                Destroy(player);
-                GameMaster.PlayerOneIsAlive = false;
+                GameOver.Game_Over();
             }
         }
         else
@@ -287,8 +295,7 @@ public class MoveOrb : MonoBehaviour
             }
             else
             {
-                Destroy(player);
-                GameMaster.PlayerTwoIsAlive = false;
+                GameOver.Game_Over();
             }
         }
     }

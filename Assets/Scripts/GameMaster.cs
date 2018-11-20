@@ -174,16 +174,10 @@ public class GameMaster : MonoBehaviour
         fogInstance.position = new Vector3(0, 2.5f, playerPosition.z + 25.0f);
 
         startSpawningCactie = true;
-        if (orbInstancePlayer1 == null)
-        {
-            orbInstancePlayer1 = orbInstancePlayer2;
-            GameOver.Game_Over();
-        }
-        if (orbInstancePlayer2 == null)
-        {
-            orbInstancePlayer2 = orbInstancePlayer1;
-            GameOver.Game_Over();
-        }
+        //if (orbInstancePlayer2 == null || orbInstancePlayer1 == null)
+        //{
+        //    GameOver.Game_Over();
+        //}
 
         if (orbInstancePlayer1.position.z > ListOfFloors.Peek().position.z + 20)
         {
@@ -201,7 +195,7 @@ public class GameMaster : MonoBehaviour
 
         }
         var averageOrbZ = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2;
-        mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, mainCameraInstance.transform.position.y, averageOrbZ - 2.5f);
+        mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, mainCameraInstance.transform.position.y, averageOrbZ - 4.5f);
 
         var playerVelocity1 = orbInstancePlayer1.gameObject.GetComponent<Rigidbody>().velocity;
         var playerVelocity2 = orbInstancePlayer2.gameObject.GetComponent<Rigidbody>().velocity;
