@@ -27,6 +27,7 @@ public class MoveOrb : MonoBehaviour
     public bool ghostOn;
     public long timerGhost;
     public float slow;
+    
 
     // Use this for initialization
     private void Start()
@@ -54,6 +55,9 @@ public class MoveOrb : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        timer++;
+
+
         HandleStaticPoints();
         handleSideMovementPad();
         HandleShootingTrigger();
@@ -118,7 +122,7 @@ public class MoveOrb : MonoBehaviour
             else if (name == Perks.BottlePoint.ToString())
                 AddPointToAppropriatePlayer();
             else if (name == Perks.BlockShooting.ToString())
-                StopShooting();
+                StopShooting(5f);
             else if (name == Perks.ReverseControls.ToString())
                 ReverseMove();
             else if (name == Perks.GhostPerk.ToString())
@@ -190,10 +194,10 @@ public class MoveOrb : MonoBehaviour
             StartCoroutine(StopReverseMode());
         }
     }
-    private void StopShooting()
+    private void StopShooting(float pauseTime)
     {
         canShoot = false;
-        StartCoroutine(startShooting());
+        StartCoroutine(startShooting(pauseTime));
     }
 
     private IEnumerator StopReverseMode()
@@ -225,24 +229,30 @@ public class MoveOrb : MonoBehaviour
     private void HandleShootingTrigger()
     {
         var transform = GetComponent<Transform>();
-        if (transform.gameObject.name == Players.PlayerOne.ToString())
+
+        if (canShoot)
         {
-            if (Input.GetAxis(Axis.PrimaryAttackOne.ToString()) > 0)
+            if (transform.gameObject.name == Players.PlayerOne.ToString())
             {
-                var position = transform.position;
-                var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
-                bullet.PlayerObject = transform.gameObject;
+                if (Input.GetAxis(Axis.PrimaryAttackOne.ToString()) > 0)
+                {
+                    StopShooting(0.25f);
+                    var position = transform.position;
+                    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
+                    bullet.PlayerObject = transform.gameObject;
+                }
+
             }
 
-        }
-
-        if (transform.gameObject.name == Players.PlayerTwo.ToString())
-        {
-            if (Input.GetAxis(Axis.PrimaryAttackTwo.ToString()) > 0)
+            if (transform.gameObject.name == Players.PlayerTwo.ToString())
             {
-                var position = transform.position;
-                var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
-                bullet.PlayerObject = transform.gameObject;
+                if (Input.GetAxis(Axis.PrimaryAttackTwo.ToString()) > 0)
+                {
+                    StopShooting(0.25f);
+                    var position = transform.position;
+                    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
+                    bullet.PlayerObject = transform.gameObject;
+                }
             }
         }
     }
@@ -253,9 +263,9 @@ public class MoveOrb : MonoBehaviour
         zSpeed = 0;
     }
 
-    private IEnumerator startShooting()
+    private IEnumerator startShooting(float pauseTime)
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(pauseTime);
         canShoot = true;
     }
 

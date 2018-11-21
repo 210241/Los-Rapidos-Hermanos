@@ -415,12 +415,13 @@ MonoBehaviour:
   SatelliteHoleFloor: {fileID: 4987356371796342, guid: c8e6edae1d20e2f4b99b3a0928f04813,
     type: 2}
   BaseCactus: {fileID: 4474279505127030, guid: 1f57eb00f14ccf54bad4384f0b03ad24, type: 2}
-  Orb_Player1: {fileID: 4926426525175534, guid: 1a92e71cf50d6d34796fc3ea52a85e3f,
+  Orb_Player1: {fileID: 4423968225645104, guid: efcf6007920595341b59861bb0d540c5,
     type: 2}
   Orb_Player2: {fileID: 4338892484467992, guid: a27d29e7fa3ae9844aac56a7b2c8e50f,
     type: 2}
   Wall: {fileID: 4503256689226266, guid: 33a3440aeb5939648b83d7302a3f19fb, type: 2}
   Fog: {fileID: 0}
+  BlobShadowProjector: {fileID: 0}
 --- !u!4 &122791640
 Transform:
   m_ObjectHideFlags: 0
