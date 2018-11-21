@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Timers;
 using Assets.Scripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -16,8 +17,8 @@ public class GameMaster : MonoBehaviour
 {
     public Camera MainCamera;
 
-    public Text PlayerOneScore;
-    public Text PlayerTwoScore;
+    public TextMeshProUGUI PlayerOneScore;
+    public TextMeshProUGUI PlayerTwoScore;
 
     public Transform BasicFloor;
     public Transform CrossHoleFloor;
