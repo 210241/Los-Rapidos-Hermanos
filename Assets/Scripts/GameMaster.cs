@@ -9,6 +9,7 @@ using System.Timers;
 using Assets.Scripts;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -30,6 +31,9 @@ public class GameMaster : MonoBehaviour
     public Transform Wall;
     public Transform Fog;
     public Transform BlobShadowProjector;
+    public Transform RampFloor;
+    public Transform PipeLineFloor;
+    
 
     public static int PlayerOnePoints;
     public static int PlayerTwoPoints;
@@ -70,6 +74,9 @@ public class GameMaster : MonoBehaviour
 
     public static bool GenerateFloorsRandomly = true;
 
+    public int LevelCounter = 1;
+    private List<FloorData> Level1Map;
+
     // Use this for initialization
     void Start()
     {
@@ -77,6 +84,8 @@ public class GameMaster : MonoBehaviour
         CrossHoleFloor = Resources.Load<Transform>("Floor/CrossHoleFloorBlock(5x5)");
         BigCrossHoleFloor = Resources.Load<Transform>("Floor/BigCrossHoleFloorBlock(5x5)");
         SatelliteHoleFloor = Resources.Load<Transform>("Floor/SatelliteHoleFloorBlock(5x5)");
+        RampFloor = Resources.Load<Transform>("Floor/Ramp");
+        PipeLineFloor = Resources.Load<Transform>("Floor/BasePipe");
 
         BaseCactus = Resources.Load<Transform>("BasicCactus");
         Orb_Player1 = Resources.Load<Transform>("Sphere&Hat");
@@ -97,6 +106,8 @@ public class GameMaster : MonoBehaviour
         CrossHoleFloor.name = Floor.CrossHoleFloor.ToString(); ;
         BigCrossHoleFloor.name = Floor.BigCrossHoleFloor.ToString(); ;
         SatelliteHoleFloor.name = Floor.SatelliteHoleFloor.ToString(); ;
+
+        InitializeLevel1();
 
         startSpawningCactie = false;
         IsWallOnTheScreen = false;
@@ -155,6 +166,25 @@ public class GameMaster : MonoBehaviour
         blobShadowProjectorPlayerOne.GetComponent<Projector>().ignoreLayers = (1 << 2);
         blobShadowProjectorPlayerTwo.GetComponent<Projector>().ignoreLayers = (1 << 2);
 
+    }
+
+    private void InitializeLevel1()
+    {
+        Level1Map = new List<FloorData>()
+     {
+        new FloorData(BasicFloor, 5, Floor.BasicFloor),
+        new FloorData(RampFloor, 5, Floor.BasicFloor),
+        new FloorData(PipeLineFloor, 5, Floor.CrossHoleFloor),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+        new FloorData(BasicFloor, 5, Floor.BasicFloor),
+        new FloorData(BasicFloor, 5, Floor.BasicFloor),
+    };
     }
 
     private Assets.Scripts.Tuple<Transform,Floor> GetFloor()
@@ -263,23 +293,18 @@ public class GameMaster : MonoBehaviour
     public void PopulateStaticFloorQueue()
     {
         NeedToPopulateFloorQueue = false;
-        StaticFloorQueue = new Queue<FloorData>(new List<FloorData>()
-            {
-            new FloorData(BasicFloor, 5, Floor.BasicFloor),
-            new FloorData(BasicFloor, 5, Floor.BasicFloor),
-            new FloorData(CrossHoleFloor, 5, Floor.CrossHoleFloor),
-            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-            new FloorData(BasicFloor, 5, Floor.BasicFloor),
-            new FloorData(BasicFloor, 5, Floor.BasicFloor),
-        });
+        switch (LevelCounter)
+        {
+            case 1:
+                StaticFloorQueue = new Queue<FloorData>(Level1Map);
+                break;
+
+        }
+        LevelCounter++;
         GenerateFloorsRandomly = false;
     }
 
     public static bool NeedToPopulateFloorQueue = false;
+
+   
 }
