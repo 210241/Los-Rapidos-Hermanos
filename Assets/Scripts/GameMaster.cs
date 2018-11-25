@@ -74,8 +74,12 @@ public class GameMaster : MonoBehaviour
 
     public static bool GenerateFloorsRandomly = true;
 
-    public int LevelCounter = 1;
+    public int LevelCounter;
+
     private List<FloorData> Level1Map;
+
+
+    private FloorData LastFloorData;
 
     // Use this for initialization
     void Start()
@@ -85,7 +89,7 @@ public class GameMaster : MonoBehaviour
         BigCrossHoleFloor = Resources.Load<Transform>("Floor/BigCrossHoleFloorBlock(5x5)");
         SatelliteHoleFloor = Resources.Load<Transform>("Floor/SatelliteHoleFloorBlock(5x5)");
         RampFloor = Resources.Load<Transform>("Floor/Ramp");
-        PipeLineFloor = Resources.Load<Transform>("Floor/BasePipe");
+        PipeLineFloor = Resources.Load<Transform>("Floor/Arch");
 
         BaseCactus = Resources.Load<Transform>("BasicCactus");
         Orb_Player1 = Resources.Load<Transform>("Sphere&Hat");
@@ -141,16 +145,18 @@ public class GameMaster : MonoBehaviour
         floor2.name= Floor.BasicFloor.ToString();
         ListOfFloors.Enqueue(floor1);
         ListOfFloors.Enqueue(floor2);
-
+        LevelCounter = 1;
         //PopulatePossibleFloorsList();
-
+        FloorData floorTransform = new FloorData(BasicFloor, 69, Floor.DoubleHorizontalSlidingFloor, new Rotation(0,0,0));
         for (int i = 2; i < 10; i++)
         {
-            Assets.Scripts.Tuple<Transform, Floor> floorTransform = GetFloor();
-            var floor3 = Instantiate(floorTransform.Item1, new Vector3(0, 0, i * 5), noRotate);
-            floor3.name = floorTransform.Item2.ToString();
+            floorTransform = GetFloor();
+            var floor3 = Instantiate(floorTransform.FloorTransform, new Vector3(0, 0, i * 5), noRotate);
+            floor3.name = floorTransform.FloorType.ToString();
             ListOfFloors.Enqueue(floor3);
         }
+
+        LastFloorData = floorTransform;
 
         fogInstance = Instantiate(Fog, new Vector3(0, 0, 40), noRotate);
 
@@ -170,31 +176,63 @@ public class GameMaster : MonoBehaviour
 
     private void InitializeLevel1()
     {
+        var hole = 1;
+
+        var tempRamp = Instantiate(RampFloor, new Vector3(-100, -100, -100), noRotate);
+
+        var rampLen = tempRamp.GetComponent<Renderer>().bounds.size.y * 2;
+
+        Destroy(tempRamp.gameObject);
+
+        var tempPipe = Instantiate(PipeLineFloor, new Vector3(-100, -100, -100), noRotate);
+
+        var pipeLen = tempRamp.GetComponent<Renderer>().bounds.size.y * 5/3;
+
+        Destroy(tempPipe.gameObject);
+
+        Rotation myNoRotate = new Rotation(0,0,0); 
+
         Level1Map = new List<FloorData>()
      {
-        new FloorData(BasicFloor, 5, Floor.BasicFloor),
-        new FloorData(RampFloor, 5, Floor.BasicFloor),
-        new FloorData(PipeLineFloor, 5, Floor.CrossHoleFloor),
-        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
-        new FloorData(BasicFloor, 5, Floor.BasicFloor),
-        new FloorData(BasicFloor, 5, Floor.BasicFloor),
+        new FloorData(BasicFloor, 10, Floor.BasicFloor, myNoRotate),
+        new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+         new FloorData(RampFloor, rampLen, Floor.BasicFloor, myNoRotate, 3f),
+        new FloorData(RampFloor, 0, Floor.BasicFloor, myNoRotate, 0f),
+        new FloorData(PipeLineFloor, pipeLen + hole, Floor.CrossHoleFloor, new Rotation(0,0,190), new Vector3(-2.5f, -1f), 0.1f),
+        new FloorData(PipeLineFloor, pipeLen + hole, Floor.CrossHoleFloor, new Rotation(0,5,190), new Vector3(-1.5f, 0), 0.1f),
+        new FloorData(PipeLineFloor, pipeLen + hole, Floor.CrossHoleFloor, new Rotation(0,10,190), new Vector3(-0.5f, 0), 0.1f),
+         new FloorData(PipeLineFloor, pipeLen + hole, Floor.CrossHoleFloor, new Rotation(0,15,190), new Vector3(1.5f, 0), 0.1f),
+         new FloorData(PipeLineFloor, pipeLen + hole, Floor.CrossHoleFloor, new Rotation(0,20,190), new Vector3(2.5f, 0), 0.1f),
+         new FloorData(PipeLineFloor, pipeLen + hole, Floor.CrossHoleFloor, new Rotation(0,25,190), new Vector3(3.5f, 0), 0.1f),
+         new FloorData(PipeLineFloor, pipeLen + hole, Floor.CrossHoleFloor, new Rotation(0,30,190), new Vector3(4.5f, 0), 0.1f),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor, myNoRotate),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor, myNoRotate),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor, myNoRotate),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor, myNoRotate),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor, myNoRotate),
+        new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor, myNoRotate),
+        new FloorData(BasicFloor, 5, Floor.BasicFloor, myNoRotate),
+        new FloorData(BasicFloor, 5, Floor.BasicFloor, myNoRotate),
     };
     }
 
-    private Assets.Scripts.Tuple<Transform,Floor> GetFloor()
+    private FloorData GetFloor()
     {
         if(!GenerateFloorsRandomly)
         {
             
             if(StaticFloorQueue.Count != 0)
             {   FloorData next = StaticFloorQueue.Dequeue();
-                return new Assets.Scripts.Tuple<Transform, Floor>(next.FloorTransform, next.FloorType);
+                return next;
             }
         }
         // If there are no floors left in the static queue, we get random floor
@@ -215,15 +253,15 @@ public class GameMaster : MonoBehaviour
         switch (chosenFloor)
         {
             case Floor.BasicFloor:
-                return new Assets.Scripts.Tuple<Transform, Floor>(BasicFloor,Floor.BasicFloor);
+                return new FloorData(BasicFloor, 5, Floor.BasicFloor, new Rotation(0,0,0));
             case Floor.CrossHoleFloor:
-                return new Assets.Scripts.Tuple<Transform, Floor>(CrossHoleFloor, Floor.CrossHoleFloor);
+                return new FloorData(CrossHoleFloor, 5, Floor.CrossHoleFloor, new Rotation(0, 0, 0));
             case Floor.BigCrossHoleFloor:
-                return new Assets.Scripts.Tuple<Transform, Floor>(BigCrossHoleFloor, Floor.BigCrossHoleFloor);
+                return new FloorData(BigCrossHoleFloor, 5, Floor.BigCrossHoleFloor, new Rotation(0, 0, 0));
             case Floor.SatelliteHoleFloor:
-                return new Assets.Scripts.Tuple<Transform, Floor>(SatelliteHoleFloor, Floor.SatelliteHoleFloor);
+                return new FloorData(SatelliteHoleFloor, 5, Floor.SatelliteHoleFloor, new Rotation(0, 0, 0));
             default:
-                return new Assets.Scripts.Tuple<Transform, Floor>(BasicFloor, Floor.BasicFloor);
+                return new FloorData(BasicFloor, 5, Floor.BasicFloor, new Rotation(0, 0, 0));
         }
     }
 
@@ -231,6 +269,8 @@ public class GameMaster : MonoBehaviour
     private void Update()
     {
         
+        orbInstancePlayer1.LookAt(orbInstancePlayer1);
+
         var playerOnePosition = orbInstancePlayer1.position;
         var playerTwoPosition = orbInstancePlayer2.position;
 
@@ -244,13 +284,14 @@ public class GameMaster : MonoBehaviour
         //{
         //    GameOver.Game_Over();
         //}
-        if(NeedToPopulateFloorQueue) PopulateStaticFloorQueue();
+        if(NeedToPopulateFloorQueue)
+            PopulateStaticFloorQueue();
 
         RandomlyGenerateFloors();
         
         var averageOrbZ = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2;
-        mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, mainCameraInstance.transform.position.y, averageOrbZ - 4.5f);
-
+        var averageOrbY = (orbInstancePlayer1.position.y + orbInstancePlayer2.position.y) / 2;
+        mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, averageOrbY + 3.14f, averageOrbZ - 4.5f);
         var playerVelocity1 = orbInstancePlayer1.gameObject.GetComponent<Rigidbody>().velocity;
         var playerVelocity2 = orbInstancePlayer2.gameObject.GetComponent<Rigidbody>().velocity;
 
@@ -259,10 +300,13 @@ public class GameMaster : MonoBehaviour
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
 
-        if (floorsWithoutWall >= 20)
+        if (floorsWithoutWall >= 1)
         {
             IsWallOnTheScreen = true;
             wallInstance = Instantiate(Wall, new Vector3(0, 1.8f, orbInstancePlayer1.position.z + 25), noRotate);
+            Destroy(wallInstance.gameObject);
+            IsWallOnTheScreen = false;
+            NeedToPopulateFloorQueue = true;
 
             floorsWithoutWall = 0;
         }
@@ -271,20 +315,30 @@ public class GameMaster : MonoBehaviour
 
     private void RandomlyGenerateFloors()
     {
+        var lastFloorPosition = ListOfFloors.Last().position;
+
         if (orbInstancePlayer1.position.z > ListOfFloors.Peek().position.z + 20)
         {
-
             var firstFloor = ListOfFloors.Dequeue();
             Destroy(firstFloor.gameObject);
-            var floorTransform = GetFloor();
-            var floor = Instantiate(floorTransform.Item1, new Vector3(0, 0, orbInstancePlayer1.position.z + 25),
-                noRotate);
-            floor.name = floorTransform.Item2.ToString();
+
+            var floorData = GetFloor();
+            var floor = Instantiate(
+                floorData.FloorTransform,
+                new Vector3(
+                    floorData.PositionOffset.x,
+                    lastFloorPosition.y + LastFloorData.Height - 0.1f + floorData.PositionOffset.y,
+                    lastFloorPosition.z + LastFloorData.Length + floorData.PositionOffset.z
+                ),
+                noRotate
+            );
+            floor.name = floorData.FloorType.ToString();
+            floor.GetComponent<Transform>().Rotate(new Vector3(floorData.Rotation.XAngle, floorData.Rotation.YAngle, floorData.Rotation.ZAngle));
             ListOfFloors.Enqueue(floor);
+            LastFloorData = floorData;
 
             if (!IsWallOnTheScreen && GenerateFloorsRandomly)
                 floorsWithoutWall++;
-
         }
     }
 

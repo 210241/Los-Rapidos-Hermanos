@@ -28,12 +28,14 @@ public class MoveOrb : MonoBehaviour
     public bool ghostOn;
     public long timerGhost;
     public float slow;
+    private float deathY = 0;
+    private float floorY;
 
     // Use this for initialization
     private void Start()
     {
-        BASE_GRAVITY = new Vector3(0f, -120.0F, 0f);
-        JUMP_VEL = 5;
+        BASE_GRAVITY = new Vector3(0f, -240.0F, 0f);
+        JUMP_VEL = 8;
         horizVel = 0;
         vertVel = 0;
         zVel = 0;
@@ -45,6 +47,7 @@ public class MoveOrb : MonoBehaviour
         GameMaster.PlayerOnePoints = 0;
         GameMaster.PlayerTwoPoints = 0;
         Physics.gravity = BASE_GRAVITY;
+        deathY = 0;
 
     }
 
@@ -55,6 +58,7 @@ public class MoveOrb : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+
         timer++;
 
 
@@ -83,7 +87,7 @@ public class MoveOrb : MonoBehaviour
         //    bullet.PlayerObject = GetComponent<Transform>().gameObject;
         //}
 
-        if (GetComponent<Transform>().position.y < 0)
+        if (GetComponent<Transform>().position.y < deathY)
         {
             DestroyAppropriatePlayer();
         }
@@ -99,11 +103,22 @@ public class MoveOrb : MonoBehaviour
         }
 
     }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == Tags.Ramp.ToString())
+        {
+            deathY = -100;
+        }
+    }
+
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == Tags.Ground.ToString())
+        if (other.gameObject.tag == Tags.Ground.ToString() || other.gameObject.tag == Tags.Ramp.ToString())
         {
             canJump = true;
+            deathY = other.gameObject.GetComponent<Transform>().position.y - 2;
+            floorY = other.gameObject.GetComponent<Transform>().position.y;
         }
 
         if (other.gameObject.tag == Tags.Wall.ToString())
@@ -138,6 +153,11 @@ public class MoveOrb : MonoBehaviour
         {
             SlowOn();
         }
+
+        if (other.gameObject.tag == Tags.Ramp.ToString())
+        {
+            SpeedUp(20f);
+        }
     }
 
     private void SlowOn()
@@ -158,15 +178,15 @@ public class MoveOrb : MonoBehaviour
         ghostOn = true;
         vertVel = 0;
         var position = GetComponent<Transform>().position;
-        GetComponent<Transform>().position = new Vector3(position.x, 0.3516032f, position.z);
+        GetComponent<Transform>().position = new Vector3(position.x,floorY + 0.3516032f, position.z);
         //GetComponent<Rigidbody>().useGravity = false;
         GetComponent<SphereCollider>().isTrigger = true;
-        StartCoroutine(GhostOff());
+        StartCoroutine(GhostOff(3f));
     }
 
-    private IEnumerator GhostOff()
+    private IEnumerator GhostOff(float time)
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(time);
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<SphereCollider>().isTrigger = false;
         //canJump = true;
@@ -174,9 +194,9 @@ public class MoveOrb : MonoBehaviour
 
     }
 
-    private void SpeedUp()
+    private void SpeedUp(float speed = 3)
     {
-        zSpeed = 3;
+        zSpeed = speed;
         StartCoroutine(stopSpeedUp());
     }
     private void ReverseMove()
@@ -208,7 +228,6 @@ public class MoveOrb : MonoBehaviour
         GameMaster.PlayerOneControlReversedMultiplier = 1; //true
 
     }
-
 
     private void handleSideMovementPad()
     {
@@ -338,7 +357,13 @@ public class MoveOrb : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == Tags.Ground.ToString())
+        if (other.tag == Tags.Ramp.ToString())
+        {
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<SphereCollider>().isTrigger = false;
+            ghostOn = false;
+        }
+        if (other.tag == Tags.Ground.ToString() || other.tag == Tags.Ramp.ToString())
         {
             var positionOrb = GetComponent<Transform>().position;
             GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
