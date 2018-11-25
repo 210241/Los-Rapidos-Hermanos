@@ -3,6 +3,7 @@ using System.Security.Policy;
 using System.Threading;
 using System.Timers;
 using UnityEngine;
+using UnityEngine.UI;
 using EnumNamespace;
 
 public class MoveOrb : MonoBehaviour
@@ -27,7 +28,6 @@ public class MoveOrb : MonoBehaviour
     public bool ghostOn;
     public long timerGhost;
     public float slow;
-    
 
     // Use this for initialization
     private void Start()
@@ -234,11 +234,11 @@ public class MoveOrb : MonoBehaviour
         {
             if (transform.gameObject.name == Players.PlayerOne.ToString())
             {
-                if (Input.GetAxis(Axis.PrimaryAttackOne.ToString()) > 0)
+                if (Input.GetAxis(Axis.PrimaryAttackOne.ToString()) < 0)
                 {
                     StopShooting(0.25f);
                     var position = transform.position;
-                    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
+                    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.25f, position.z + 0.5f), GameMaster.noRotate);
                     bullet.PlayerObject = transform.gameObject;
                 }
 
@@ -246,11 +246,11 @@ public class MoveOrb : MonoBehaviour
 
             if (transform.gameObject.name == Players.PlayerTwo.ToString())
             {
-                if (Input.GetAxis(Axis.PrimaryAttackTwo.ToString()) > 0)
+                if (Input.GetAxis(Axis.PrimaryAttackTwo.ToString()) < 0)
                 {
                     StopShooting(0.25f);
                     var position = transform.position;
-                    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
+                    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.25f, position.z + 0.5f), GameMaster.noRotate);
                     bullet.PlayerObject = transform.gameObject;
                 }
             }
@@ -309,11 +309,11 @@ public class MoveOrb : MonoBehaviour
 
         if (player.name == Players.PlayerOne.ToString())
         {
+            GameMaster.PlayerOneLives--;
             if (GameMaster.PlayerOneLives > 0)
             {
                 GhostOn();
                 player.GetComponent<Transform>().position = new Vector3(0, 0.35f, position.z);
-                GameMaster.PlayerOneLives--;
 
             }
             else
@@ -323,11 +323,11 @@ public class MoveOrb : MonoBehaviour
         }
         else
         {
+            GameMaster.PlayerTwoLives--;
             if (GameMaster.PlayerTwoLives > 0)
             {
                 GhostOn();
                 player.GetComponent<Transform>().position = new Vector3(0, 0.35f, position.z);
-                GameMaster.PlayerTwoLives--;
             }
             else
             {
