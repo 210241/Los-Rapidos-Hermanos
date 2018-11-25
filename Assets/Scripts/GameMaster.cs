@@ -78,8 +78,8 @@ public class GameMaster : MonoBehaviour
         SatelliteHoleFloor = Resources.Load<Transform>("Floor/SatelliteHoleFloorBlock(5x5)");
 
         BaseCactus = Resources.Load<Transform>("BasicCactus");
-        Orb_Player1 = Resources.Load<Transform>("Sphere");
-        Orb_Player2 = Resources.Load<Transform>("Sphere2");
+        Orb_Player1 = Resources.Load<Transform>("Sphere&Hat");
+        Orb_Player2 = Resources.Load<Transform>("Sphere&Hat2");
         Wall = Resources.Load<Transform>("Cube");
         Fog = Resources.Load<Transform>("Fog");
 
