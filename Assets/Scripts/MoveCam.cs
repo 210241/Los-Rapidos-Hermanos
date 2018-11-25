@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveCam : MonoBehaviour {
+public class MoveCam : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-	    GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
+    public Transform PlayerOne;
+    public Transform PlayerTwo;
+
+    public Transform AveragePlayer;
+
+    // Update is called once per frame
+    void LateUpdate () {
+        
+        float avgZ = (PlayerOne.position.z + PlayerTwo.position.z) / 2;
+        float avgY = (PlayerOne.position.y + PlayerTwo.position.y) / 2;
+        float avgX = (PlayerOne.position.x + PlayerTwo.position.x) / 2;
+
+        transform.position = new Vector3(0, avgY + 1, avgZ - 7);
+        AveragePlayer.position = new Vector3(avgX, avgY, avgZ);
+        transform.LookAt(AveragePlayer);
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

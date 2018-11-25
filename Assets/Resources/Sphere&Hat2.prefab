@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 54088167718006244}
   - component: {fileID: 143260425783346662}
   - component: {fileID: 135250911074583762}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere&Hat2
   m_TagString: Player
   m_Icon: {fileID: 0}

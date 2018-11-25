@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 54777603873623644}
   - component: {fileID: 143762561021651332}
   - component: {fileID: 135448656629651572}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere&Hat
   m_TagString: Player
   m_Icon: {fileID: 0}

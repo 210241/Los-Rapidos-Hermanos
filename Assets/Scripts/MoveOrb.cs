@@ -83,7 +83,7 @@ public class MoveOrb : MonoBehaviour
         //    bullet.PlayerObject = GetComponent<Transform>().gameObject;
         //}
 
-        if (GetComponent<Transform>().position.y < 0)
+        if (GetComponent<Transform>().position.y < -5)
         {
             DestroyAppropriatePlayer();
         }
