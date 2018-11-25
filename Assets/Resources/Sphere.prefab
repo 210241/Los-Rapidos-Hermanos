@@ -140,6 +140,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealthbarPlayerOne: {fileID: 0}
   currentHealthbarPlayerTwo: {fileID: 0}
+  numberOfLivesPlayerOne: {fileID: 0}
+  numberOfLivesPlayerTwo: {fileID: 0}
 --- !u!135 &135561628875952452
 SphereCollider:
   m_ObjectHideFlags: 1

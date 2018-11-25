@@ -154,8 +154,8 @@ public class GameMaster : MonoBehaviour
 
         fogInstance = Instantiate(Fog, new Vector3(0, 0, 40), noRotate);
 
-        orbInstancePlayer1.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
-        orbInstancePlayer2.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+        orbInstancePlayer1.GetComponentInChildren<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+        orbInstancePlayer2.GetComponentInChildren<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
 
         orbInstancePlayer1.gameObject.layer = 2;
         orbInstancePlayer2.gameObject.layer = 2;

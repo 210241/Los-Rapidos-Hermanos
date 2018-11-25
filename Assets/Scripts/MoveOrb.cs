@@ -45,7 +45,7 @@ public class MoveOrb : MonoBehaviour
         GameMaster.PlayerOnePoints = 0;
         GameMaster.PlayerTwoPoints = 0;
         Physics.gravity = BASE_GRAVITY;
-
+        //GetComponent<Renderer>().enabled = false;
     }
 
     void FixedUpdate()
@@ -91,11 +91,20 @@ public class MoveOrb : MonoBehaviour
         {
             timerGhost++;
             if (timerGhost % 15 == 0)
-                GetComponent<Renderer>().enabled = !GetComponent<Renderer>().enabled;
+            {
+                foreach (var renderer in GetComponentsInChildren<Renderer>())
+                {
+                    renderer.enabled = !renderer.enabled;
+                }
+            }
+            
         }
         else
         {
-            GetComponent<Renderer>().enabled = true;
+            foreach (var renderer in GetComponentsInChildren<Renderer>())
+            {
+                renderer.enabled = true;
+            }
         }
 
     }
