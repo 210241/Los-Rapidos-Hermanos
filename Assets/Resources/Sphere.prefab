@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33121088622178180}
   - component: {fileID: 23887138264685716}
   - component: {fileID: 135561628875952452}
+  - component: {fileID: 114786010517654710}
   - component: {fileID: 114350153231841618}
   - component: {fileID: 54394960163469816}
   - component: {fileID: 143525388516290148}
@@ -126,6 +127,19 @@ MonoBehaviour:
   ghostOn: 0
   timerGhost: 0
   slow: 0
+--- !u!114 &114786010517654710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1023716143679390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5caf4473475be44b56d667263819cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealthbarPlayerOne: {fileID: 0}
+  currentHealthbarPlayerTwo: {fileID: 0}
 --- !u!135 &135561628875952452
 SphereCollider:
   m_ObjectHideFlags: 1
