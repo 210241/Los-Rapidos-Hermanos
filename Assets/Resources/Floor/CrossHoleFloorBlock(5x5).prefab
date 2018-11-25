@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 114224187203584866}
   - component: {fileID: 114904030229258760}
   m_Layer: 0
-  m_Name: CrossHoleFloorBlock(5x5)
+  m_Name: CrossHoleFloor
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

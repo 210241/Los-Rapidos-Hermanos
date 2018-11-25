@@ -51,6 +51,8 @@ public class Shooting : MonoBehaviour
                 GameMaster.IsWallOnTheScreen = false;
                 GameMaster.CurrentWallHealthPlayerOne = GameMaster.MaxWallHealth;
                 GameMaster.CurrentWallHealthPlayerTwo = GameMaster.MaxWallHealth;
+
+                GameMaster.NeedToPopulateFloorQueue = true;
             }
         }
 

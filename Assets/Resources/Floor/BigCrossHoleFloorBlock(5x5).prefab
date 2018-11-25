@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 114233446721431212}
   - component: {fileID: 114158898123518800}
   m_Layer: 0
-  m_Name: BigCrossHoleFloorBlock(5x5)
+  m_Name: BigCrossHoleFloor
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

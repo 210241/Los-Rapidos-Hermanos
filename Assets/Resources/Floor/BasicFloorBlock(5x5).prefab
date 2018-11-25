@@ -422,7 +422,7 @@ GameObject:
   - component: {fileID: 114457439475762678}
   - component: {fileID: 114323537839105482}
   m_Layer: 0
-  m_Name: BasicFloorBlock(5x5)
+  m_Name: BasicFloor
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
