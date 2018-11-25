@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.28717816, g: 0.335866, b: 0.5218967, a: 1}
+  m_IndirectSpecularColor: {r: 0.28711563, g: 0.3358623, b: 0.5218703, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -422,6 +422,9 @@ MonoBehaviour:
   Wall: {fileID: 4503256689226266, guid: 33a3440aeb5939648b83d7302a3f19fb, type: 2}
   Fog: {fileID: 0}
   BlobShadowProjector: {fileID: 0}
+  RampFloor: {fileID: 0}
+  PipeLineFloor: {fileID: 0}
+  LevelCounter: 1
 --- !u!4 &122791640
 Transform:
   m_ObjectHideFlags: 0
