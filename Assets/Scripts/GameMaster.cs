@@ -68,6 +68,7 @@ public class GameMaster : MonoBehaviour
 
     public static bool startSpawningCactie;
 
+    public static bool GenerateFloorsRandomly = true;
 
     // Use this for initialization
     void Start()
@@ -158,6 +159,15 @@ public class GameMaster : MonoBehaviour
 
     private Assets.Scripts.Tuple<Transform,Floor> GetFloor()
     {
+        if(!GenerateFloorsRandomly)
+        {
+            
+            if(StaticFloorQueue.Count != 0)
+            {   FloorData next = StaticFloorQueue.Dequeue();
+                return new Assets.Scripts.Tuple<Transform, Floor>(next.FloorTransform, next.FloorType);
+            }
+        }
+        // If there are no floors left in the static queue, we get random floor
         int counter = 0;
         int probabilityCounter = 0;
         var childrenMap = StaticMappings.FloorNameToChildrenMap[ListOfFloors.Last().name].Select(t =>
@@ -175,7 +185,7 @@ public class GameMaster : MonoBehaviour
         switch (chosenFloor)
         {
             case Floor.BasicFloor:
-                return new Assets.Scripts.Tuple<Transform, Floor>( BasicFloor,Floor.BasicFloor);
+                return new Assets.Scripts.Tuple<Transform, Floor>(BasicFloor,Floor.BasicFloor);
             case Floor.CrossHoleFloor:
                 return new Assets.Scripts.Tuple<Transform, Floor>(CrossHoleFloor, Floor.CrossHoleFloor);
             case Floor.BigCrossHoleFloor:
@@ -185,7 +195,6 @@ public class GameMaster : MonoBehaviour
             default:
                 return new Assets.Scripts.Tuple<Transform, Floor>(BasicFloor, Floor.BasicFloor);
         }
-
     }
 
     // Update is called once per frame
@@ -205,22 +214,10 @@ public class GameMaster : MonoBehaviour
         //{
         //    GameOver.Game_Over();
         //}
+        if(NeedToPopulateFloorQueue) PopulateStaticFloorQueue();
 
-        if (orbInstancePlayer1.position.z > ListOfFloors.Peek().position.z + 20)
-        {
-
-            var firstFloor = ListOfFloors.Dequeue();
-            Destroy(firstFloor.gameObject);
-            var floorTransform = GetFloor();
-            var floor = Instantiate(floorTransform.Item1, new Vector3(0, 0, orbInstancePlayer1.position.z + 25),
-                noRotate);
-            floor.name = floorTransform.Item2.ToString();
-            ListOfFloors.Enqueue(floor);
-
-            if (!IsWallOnTheScreen)
-                floorsWithoutWall++;
-
-        }
+        RandomlyGenerateFloors();
+        
         var averageOrbZ = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2;
         mainCameraInstance.transform.position = new Vector3(mainCameraInstance.transform.position.x, mainCameraInstance.transform.position.y, averageOrbZ - 4.5f);
 
@@ -241,4 +238,48 @@ public class GameMaster : MonoBehaviour
         }
 
     }
+
+    private void RandomlyGenerateFloors()
+    {
+        if (orbInstancePlayer1.position.z > ListOfFloors.Peek().position.z + 20)
+        {
+
+            var firstFloor = ListOfFloors.Dequeue();
+            Destroy(firstFloor.gameObject);
+            var floorTransform = GetFloor();
+            var floor = Instantiate(floorTransform.Item1, new Vector3(0, 0, orbInstancePlayer1.position.z + 25),
+                noRotate);
+            floor.name = floorTransform.Item2.ToString();
+            ListOfFloors.Enqueue(floor);
+
+            if (!IsWallOnTheScreen && GenerateFloorsRandomly)
+                floorsWithoutWall++;
+
+        }
+    }
+
+    private Queue<FloorData> StaticFloorQueue;
+
+    public void PopulateStaticFloorQueue()
+    {
+        NeedToPopulateFloorQueue = false;
+        StaticFloorQueue = new Queue<FloorData>(new List<FloorData>()
+            {
+            new FloorData(BasicFloor, 5, Floor.BasicFloor),
+            new FloorData(BasicFloor, 5, Floor.BasicFloor),
+            new FloorData(CrossHoleFloor, 5, Floor.CrossHoleFloor),
+            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+            new FloorData(CrossHoleFloor, 6, Floor.CrossHoleFloor),
+            new FloorData(BasicFloor, 5, Floor.BasicFloor),
+            new FloorData(BasicFloor, 5, Floor.BasicFloor),
+        });
+        GenerateFloorsRandomly = false;
+    }
+
+    public static bool NeedToPopulateFloorQueue = false;
 }
