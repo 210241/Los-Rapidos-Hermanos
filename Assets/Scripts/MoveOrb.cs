@@ -63,7 +63,7 @@ public class MoveOrb : MonoBehaviour
         HandleShootingTrigger();
 
         var orb = GetComponent<Rigidbody>();
-        orb.velocity = new Vector3(horizVel, vertVel, 10 + zVel + zSpeed + slow);
+        orb.velocity = new Vector3(horizVel, vertVel, 20 + zVel + zSpeed + slow);
 
         if (PauseMenu.GameIsPaused)
         {
@@ -74,6 +74,7 @@ public class MoveOrb : MonoBehaviour
         {
             canJump = false;
             vertVel = JUMP_VEL;
+            Physics.gravity = new Vector3(0,50f,0);
             StartCoroutine(stopJump());
         }
         //if (Input.GetKeyDown(shoot) && canShoot)
@@ -112,6 +113,7 @@ public class MoveOrb : MonoBehaviour
     {
         if (other.gameObject.tag == Tags.Ground.ToString())
         {
+            Physics.gravity = BASE_GRAVITY;
             canJump = true;
         }
 
@@ -282,6 +284,7 @@ public class MoveOrb : MonoBehaviour
     {
         yield return new WaitForSeconds(.3f);
         //vertVel = -JUMP_VEL;
+        Physics.gravity = new Vector3(0f, -520.0F, 0f);
         vertVel = 0;
     }
 
