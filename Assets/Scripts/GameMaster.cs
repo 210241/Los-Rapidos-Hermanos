@@ -55,8 +55,8 @@ public class GameMaster : MonoBehaviour
     Queue<Transform> ListOfFloors;
 
     private Transform fogInstance;
-    private Transform orbInstancePlayer1;
-    private Transform orbInstancePlayer2;
+    public static Transform orbInstancePlayer1;
+    public static Transform orbInstancePlayer2;
     private Camera mainCameraInstance;
     private Transform blobShadowProjectorPlayerOne;
     private Transform blobShadowProjectorPlayerTwo;
@@ -80,6 +80,8 @@ public class GameMaster : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        orbInstancePlayer1 = Orb_Player1;
+        orbInstancePlayer2 = Orb_Player2;
         //BasicFloor = Resources.Load<Transform>("Floor/BasicFloorBlock(5x5)");
         //CrossHoleFloor = Resources.Load<Transform>("Floor/CrossHoleFloorBlock(5x5)");
         //BigCrossHoleFloor = Resources.Load<Transform>("Floor/BigCrossHoleFloorBlock(5x5)");
@@ -121,8 +123,8 @@ public class GameMaster : MonoBehaviour
         PlayerOneIsAlive = true;
         PlayerTwoIsAlive = true;
 
-        PlayerOneLives = 3;
-        PlayerTwoLives = 3;
+        PlayerOneLives = 300;
+        PlayerTwoLives = 300;
         MaxWallHealth = 5;
         CurrentWallHealthPlayerOne = 5;
         CurrentWallHealthPlayerTwo = 5;

@@ -36,7 +36,8 @@ namespace EnumNamespace
         Cactus,
         Wall,
         HalfPipe,
-        Ramp
+        Ramp,
+        SuperGriavity
     }
 
     public enum Axis

@@ -14,6 +14,8 @@ TagManager:
   - Bullet
   - Ramp
   - HalfPipe
+  - SuperGriavity
+  - LastHalfPipe
   layers:
   - Default
   - TransparentFX
