@@ -12,6 +12,8 @@ TagManager:
   - Cactus
   - Wall
   - Bullet
+  - Ramp
+  - HalfPipe
   layers:
   - Default
   - TransparentFX

@@ -294,6 +294,8 @@ MonoBehaviour:
   horizVel: 0
   vertVel: 0
   zVel: 0
+  yVel: 0
+  xVel: 0
   laneNum: 2
   controlLocked: 0
   Bullet: {fileID: 114794539130485496, guid: f7fd218afb5ff04438bdcaa3b61b6314, type: 2}

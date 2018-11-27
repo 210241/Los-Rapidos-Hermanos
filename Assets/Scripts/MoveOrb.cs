@@ -16,6 +16,8 @@ public class MoveOrb : MonoBehaviour
     public float horizVel;
     public float vertVel;
     public float zVel;
+    public float yVel;
+    public float xVel;
     public static float zSpeed;
     public int laneNum;
     public bool controlLocked;
@@ -36,11 +38,13 @@ public class MoveOrb : MonoBehaviour
 
     private void Start()
     {
-        BASE_GRAVITY = new Vector3(0f, -520.0F, 0f);
+        BASE_GRAVITY = new Vector3(0f, -120.0F, 0f);
         JUMP_VEL = 5;
         horizVel = 0;
         vertVel = 0;
         zVel = 0;
+        xVel = 0;
+        yVel = 0;
         zSpeed = 0;
         laneNum = 2;
         controlLocked = false;
@@ -66,7 +70,7 @@ public class MoveOrb : MonoBehaviour
         HandleShootingTrigger();
 
         var orb = GetComponent<Rigidbody>();
-        orb.velocity = new Vector3(horizVel, vertVel, 20 + zVel + zSpeed + slow);
+        orb.velocity = new Vector3(horizVel + xVel, vertVel + yVel, 20 + zVel + zSpeed + slow);
 
         if (PauseMenu.GameIsPaused)
         {
@@ -76,10 +80,10 @@ public class MoveOrb : MonoBehaviour
         if (Input.GetKeyDown(jump) && canJump)
         {
             canJump = false;
-            Physics.gravity = new Vector3(0f, 0f, 0f);
             vertVel = JUMP_VEL;
+            Physics.gravity = new Vector3(0, 50f, 0);
             StartCoroutine(stopJump(.3f));
-            Physics.gravity = new Vector3(0,50f,0);
+
         }
 
         if (GetComponent<Transform>().position.y < -5)
@@ -290,8 +294,9 @@ public class MoveOrb : MonoBehaviour
             GameMaster.PlayerOneLives--;
             if (GameMaster.PlayerOneLives > 0)
             {
+                player.GetComponent<Transform>().position = new Vector3(0, 1.2680794f, position.z);
                 GhostOn(3f);
-                player.GetComponent<Transform>().position = new Vector3(0, 0.35f, position.z);
+
 
             }
             else
@@ -304,8 +309,9 @@ public class MoveOrb : MonoBehaviour
             GameMaster.PlayerTwoLives--;
             if (GameMaster.PlayerTwoLives > 0)
             {
+                player.GetComponent<Transform>().position = new Vector3(0, 1.2680794f, position.z);
                 GhostOn(3f);
-                player.GetComponent<Transform>().position = new Vector3(0, 0.35f, position.z);
+
             }
             else
             {
@@ -324,6 +330,8 @@ public class MoveOrb : MonoBehaviour
         {
             var positionOrb = GetComponent<Transform>().position;
             GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
+            zVel = 0;
+            yVel = 0;
             canJump = true;
         }
     }
@@ -333,20 +341,28 @@ public class MoveOrb : MonoBehaviour
         string tag = other.gameObject.tag;
         if (tag == Tags.Ground.ToString())
         {
+            Physics.gravity = BASE_GRAVITY;
             canJump = true;
             zVel = 0;
+            yVel = 0;
+
         }
 
         if (tag == Tags.Ramp.ToString())
         {
+            Physics.gravity = BASE_GRAVITY;
+            canJump = true;
             zVel = 3;
-            vertVel = 2;
+            yVel = 2;
+
         }
 
         if (tag == Tags.HalfPipe.ToString())
         {
+            canJump = true;
             zVel = 5;
-            vertVel = -4;
+            yVel = -4;
+            Physics.gravity = BASE_GRAVITY;
         }
 
         if (tag == Tags.Wall.ToString())
