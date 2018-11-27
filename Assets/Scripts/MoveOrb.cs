@@ -66,7 +66,7 @@ public class MoveOrb : MonoBehaviour
         HandleShootingTrigger();
 
         var orb = GetComponent<Rigidbody>();
-        orb.velocity = new Vector3(horizVel, vertVel, 10 + zVel + zSpeed + slow);
+        orb.velocity = new Vector3(horizVel, vertVel, 20 + zVel + zSpeed + slow);
 
         if (PauseMenu.GameIsPaused)
         {
@@ -79,6 +79,7 @@ public class MoveOrb : MonoBehaviour
             Physics.gravity = new Vector3(0f, 0f, 0f);
             vertVel = JUMP_VEL;
             StartCoroutine(stopJump(.3f));
+            Physics.gravity = new Vector3(0,50f,0);
         }
 
         if (GetComponent<Transform>().position.y < -5)
