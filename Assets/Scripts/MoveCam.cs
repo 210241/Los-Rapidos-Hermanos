@@ -17,7 +17,7 @@ public class MoveCam : MonoBehaviour
         float avgY = (PlayerOne.position.y + PlayerTwo.position.y) / 2;
         float avgX = (PlayerOne.position.x + PlayerTwo.position.x) / 2;
 
-        transform.position = new Vector3(0, avgY + 1, avgZ - 7);
+        transform.position = new Vector3(0, avgY + 4, avgZ - 15);
         AveragePlayer.position = new Vector3(avgX, avgY, avgZ);
         transform.LookAt(AveragePlayer);
 

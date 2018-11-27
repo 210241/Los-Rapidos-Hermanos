@@ -8,6 +8,7 @@ using EnumNamespace;
 
 public class MoveOrb : MonoBehaviour
 {
+    #region Fields
 
     private int JUMP_VEL;
     public KeyCode jump;
@@ -29,10 +30,13 @@ public class MoveOrb : MonoBehaviour
     public long timerGhost;
     public float slow;
 
-    // Use this for initialization
+    #endregion
+
+    #region Start & Update Methods
+
     private void Start()
     {
-        BASE_GRAVITY = new Vector3(0f, -120.0F, 0f);
+        BASE_GRAVITY = new Vector3(0f, -520.0F, 0f);
         JUMP_VEL = 5;
         horizVel = 0;
         vertVel = 0;
@@ -57,7 +61,6 @@ public class MoveOrb : MonoBehaviour
     {
         timer++;
 
-
         HandleStaticPoints();
         handleSideMovementPad();
         HandleShootingTrigger();
@@ -73,15 +76,10 @@ public class MoveOrb : MonoBehaviour
         if (Input.GetKeyDown(jump) && canJump)
         {
             canJump = false;
+            Physics.gravity = new Vector3(0f, 0f, 0f);
             vertVel = JUMP_VEL;
-            StartCoroutine(stopJump());
+            StartCoroutine(stopJump(.3f));
         }
-        //if (Input.GetKeyDown(shoot) && canShoot)
-        //{
-        //    var position = GetComponent<Transform>().position;
-        //    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.5f, position.z), GameMaster.noRotate);
-        //    bullet.PlayerObject = GetComponent<Transform>().gameObject;
-        //}
 
         if (GetComponent<Transform>().position.y < -5)
         {
@@ -97,7 +95,7 @@ public class MoveOrb : MonoBehaviour
                     renderer.enabled = !renderer.enabled;
                 }
             }
-            
+
         }
         else
         {
@@ -108,99 +106,45 @@ public class MoveOrb : MonoBehaviour
         }
 
     }
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.tag == Tags.Ground.ToString())
-        {
-            canJump = true;
-        }
 
-        if (other.gameObject.tag == Tags.Wall.ToString())
-        {
-            DestroyAppropriatePlayer();
-        }
+    #endregion
 
-        if (other.gameObject.tag == Tags.Perk.ToString())
-        {
-            var name = other.gameObject.name;
-            Destroy(other.gameObject);
+    #region Perk Methods
 
-
-            if (name == Perks.TacoIncreaseSpeed.ToString())
-                SpeedUp();
-            else if (name == Perks.BottlePoint.ToString())
-                AddPointToAppropriatePlayer();
-            else if (name == Perks.BlockShooting.ToString())
-                StopShooting(5f);
-            else if (name == Perks.ReverseControls.ToString())
-                ReverseMove();
-            else if (name == Perks.GhostPerk.ToString())
-                GhostOn();
-        }
-
-        if (other.gameObject.tag == Tags.Cactus.ToString())
-        {
-            DestroyAppropriatePlayer();
-        }
-
-        if (other.gameObject.tag == Objects.Bullet.ToString())
-        {
-            SlowOn();
-        }
-    }
-
-    private void SlowOn()
+    private void SlowOn(float time)
     {
         slow = -5f;
-        StartCoroutine(SlowOff());
+        StartCoroutine(SlowOff(time));
     }
 
-    private IEnumerator SlowOff()
+    private void GhostOn(float time)
     {
-        yield return new WaitForSeconds(1f);
-        slow = 0f;
-    }
-
-    private void GhostOn()
-    {
-        //canJump = false;
         ghostOn = true;
         vertVel = 0;
         var position = GetComponent<Transform>().position;
         GetComponent<Transform>().position = new Vector3(position.x, 0.3516032f, position.z);
-        //GetComponent<Rigidbody>().useGravity = false;
         GetComponent<SphereCollider>().isTrigger = true;
-        StartCoroutine(GhostOff());
+        StartCoroutine(GhostOff(time));
     }
 
-    private IEnumerator GhostOff()
+    private void SpeedUp(float speed, float time)
     {
-        yield return new WaitForSeconds(3f);
-        GetComponent<Rigidbody>().useGravity = true;
-        GetComponent<SphereCollider>().isTrigger = false;
-        //canJump = true;
-        ghostOn = false;
-
+        zSpeed = speed;
+        StartCoroutine(stopSpeedUp(time));
     }
-
-    private void SpeedUp()
-    {
-        zSpeed = 3;
-        StartCoroutine(stopSpeedUp());
-    }
-    private void ReverseMove()
+    private void ReverseMove(float time)
     {
 
         if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
         {
             GameMaster.PlayerTwoControlReversedMultiplier = -1; //true
-            StartCoroutine(StopReverseMode());
+            StartCoroutine(StopReverseMode(time));
         }
 
         if (GetComponent<Transform>().gameObject.name == Players.PlayerTwo.ToString())
         {
             GameMaster.PlayerOneControlReversedMultiplier = -1; //true
-            StartCoroutine(StopReverseMode());
+            StartCoroutine(StopReverseMode(time));
         }
     }
     private void StopShooting(float pauseTime)
@@ -209,29 +153,21 @@ public class MoveOrb : MonoBehaviour
         StartCoroutine(startShooting(pauseTime));
     }
 
-    private IEnumerator StopReverseMode()
-    {
+    #endregion
 
-        yield return new WaitForSeconds(3f);
-        GameMaster.PlayerTwoControlReversedMultiplier = 1; //true
-        GameMaster.PlayerOneControlReversedMultiplier = 1; //true
-
-    }
-
+    #region Pad Handler
 
     private void handleSideMovementPad()
     {
         if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
         {
             horizVel = 2 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadOne.ToString())) * GameMaster.PlayerOneControlReversedMultiplier;
-            //zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadOne.ToString());
 
         }
 
         if (GetComponent<Transform>().gameObject.name == Players.PlayerTwo.ToString())
         {
             horizVel = 2 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadTwo.ToString())) * GameMaster.PlayerTwoControlReversedMultiplier;
-            //zVel = 2 * Input.GetAxis(Axis.ForwardBackwardPadTwo.ToString());
         }
     }
 
@@ -266,9 +202,21 @@ public class MoveOrb : MonoBehaviour
         }
     }
 
-    private IEnumerator stopSpeedUp()
+    #endregion
+
+    #region Coroutine
+
+    private IEnumerator StopReverseMode(float time)
     {
-        yield return new WaitForSeconds(3f);
+
+        yield return new WaitForSeconds(time);
+        GameMaster.PlayerTwoControlReversedMultiplier = 1; //true
+        GameMaster.PlayerOneControlReversedMultiplier = 1; //true
+
+    }
+    private IEnumerator stopSpeedUp(float time)
+    {
+        yield return new WaitForSeconds(time);
         zSpeed = 0;
     }
 
@@ -278,12 +226,29 @@ public class MoveOrb : MonoBehaviour
         canShoot = true;
     }
 
-    private IEnumerator stopJump()
+    private IEnumerator stopJump(float time)
     {
-        yield return new WaitForSeconds(.3f);
-        //vertVel = -JUMP_VEL;
+        yield return new WaitForSeconds(time);
+        Physics.gravity = new Vector3(0f, -520f, 0f);
         vertVel = 0;
     }
+    private IEnumerator GhostOff(float time)
+    {
+        yield return new WaitForSeconds(time);
+        GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<SphereCollider>().isTrigger = false;
+        ghostOn = false;
+
+    }
+    private IEnumerator SlowOff(float time)
+    {
+        yield return new WaitForSeconds(time);
+        slow = 0f;
+    }
+
+    #endregion
+
+    #region Points Metods
 
     private void HandleStaticPoints()
     {
@@ -311,6 +276,9 @@ public class MoveOrb : MonoBehaviour
         }
     }
 
+    #endregion
+
+
     private void DestroyAppropriatePlayer()
     {
         var player = GetComponent<Rigidbody>().gameObject;
@@ -321,7 +289,7 @@ public class MoveOrb : MonoBehaviour
             GameMaster.PlayerOneLives--;
             if (GameMaster.PlayerOneLives > 0)
             {
-                GhostOn();
+                GhostOn(3f);
                 player.GetComponent<Transform>().position = new Vector3(0, 0.35f, position.z);
 
             }
@@ -335,7 +303,7 @@ public class MoveOrb : MonoBehaviour
             GameMaster.PlayerTwoLives--;
             if (GameMaster.PlayerTwoLives > 0)
             {
-                GhostOn();
+                GhostOn(3f);
                 player.GetComponent<Transform>().position = new Vector3(0, 0.35f, position.z);
             }
             else
@@ -345,14 +313,76 @@ public class MoveOrb : MonoBehaviour
         }
     }
 
+    #region Trigger and Collision Enter
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == Tags.Ground.ToString())
+        if (other.tag == Tags.Ground.ToString() ||
+            other.tag == Tags.Ramp.ToString() ||
+            other.tag == Tags.HalfPipe.ToString())
         {
             var positionOrb = GetComponent<Transform>().position;
             GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
             canJump = true;
         }
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        string tag = other.gameObject.tag;
+        if (tag == Tags.Ground.ToString())
+        {
+            canJump = true;
+            zVel = 0;
+        }
+
+        if (tag == Tags.Ramp.ToString())
+        {
+            zVel = 3;
+            vertVel = 2;
+        }
+
+        if (tag == Tags.HalfPipe.ToString())
+        {
+            zVel = 5;
+            vertVel = -4;
+        }
+
+        if (tag == Tags.Wall.ToString())
+        {
+            DestroyAppropriatePlayer();
+        }
+
+        if (tag == Tags.Perk.ToString())
+        {
+            string name = other.gameObject.name;
+            Destroy(other.gameObject);
+
+
+            if (name == Perks.TacoIncreaseSpeed.ToString())
+                SpeedUp(3f, 3f);
+            else if (name == Perks.BottlePoint.ToString())
+                AddPointToAppropriatePlayer();
+            else if (name == Perks.BlockShooting.ToString())
+                StopShooting(5f);
+            else if (name == Perks.ReverseControls.ToString())
+                ReverseMove(3f);
+            else if (name == Perks.GhostPerk.ToString())
+                GhostOn(3f);
+        }
+
+        if (tag == Tags.Cactus.ToString())
+        {
+            DestroyAppropriatePlayer();
+        }
+
+        if (tag == Objects.Bullet.ToString())
+        {
+            SlowOn(1f);
+        }
+    }
+
+    #endregion
+
 
 }
