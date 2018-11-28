@@ -24,6 +24,8 @@ public class MoveOrb : MonoBehaviour
     public static float zSpeed;
     public int laneNum;
     public bool controlLocked;
+    public AudioSource MainSound;
+    //public AudioClip
     public Shooting Bullet;
     private Vector3 BASE_GRAVITY;
     private Vector3 LAST_POSITION;
@@ -415,7 +417,7 @@ public class MoveOrb : MonoBehaviour
         if (tag == Tags.HalfPipe.ToString())
         {
             canJump = true;
-            zVel = 15;
+            zVel = 35;
             yVel = -4;
             //Physics.gravity = GREAT_GRAVITY;
         }
