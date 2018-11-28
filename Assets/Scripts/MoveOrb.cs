@@ -326,15 +326,15 @@ public class MoveOrb : MonoBehaviour
             DeathZone = other.gameObject.transform.position.y - 3;
             canJump = true;
             zVel = 15;
-            yVel = -8;
+            yVel = -6;
         }
 
         if (tag == Tags.HalfPipe.ToString())
         {
             DeathZone = other.gameObject.transform.position.y - 10;
             canJump = true;
-            zVel = 30;
-            yVel = -5;
+            zVel = 20;
+            yVel = -2;
         }
         if (tag == Tags.LastHalfPipe.ToString())
         {
