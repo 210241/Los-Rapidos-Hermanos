@@ -19,6 +19,9 @@ TagManager:
   - Checkpoint
   - Teleport
   - EndLevelRing
+  - FirstFloorFinish
+  - SecondFloorFinish
+  - ThirdFloorFinish
   layers:
   - Default
   - TransparentFX

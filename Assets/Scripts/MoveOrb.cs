@@ -377,21 +377,10 @@ public class MoveOrb : MonoBehaviour
             DestroyAppropriatePlayer();
         }
 
-        if (tag == LevelFinish.FirstFloorFinish.ToString())
+        if (tag == LevelFinish.EndLevelRing.ToString())
         {
-            SceneManager.LoadScene("Level2");
+            SceneManager.LoadScene("LevelCompleted");
         }
-
-        if (tag == LevelFinish.SecondFloorFinish.ToString())
-        {
-            SceneManager.LoadScene("Level3");
-        }
-
-        if (tag == LevelFinish.ThirdFloorFinish.ToString())
-        {
-            SceneManager.LoadScene("GameOver");
-        }
-
 
     }
 

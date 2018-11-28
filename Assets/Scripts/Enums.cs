@@ -66,9 +66,7 @@ namespace EnumNamespace
 
     public enum LevelFinish
     {
-        FirstFloorFinish,
-        SecondFloorFinish,
-        ThirdFloorFinish,
+        EndLevelRing
     }
 
 }
