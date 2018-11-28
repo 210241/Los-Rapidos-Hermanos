@@ -289,10 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5caf4473475be44b56d667263819cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealthbarPlayerOne: {fileID: 0}
-  currentHealthbarPlayerTwo: {fileID: 0}
-  numberOfLivesPlayerOne: {fileID: 0}
-  numberOfLivesPlayerTwo: {fileID: 0}
+  levelProgress: {fileID: 0}
 --- !u!114 &114695810611303866
 MonoBehaviour:
   m_ObjectHideFlags: 1
