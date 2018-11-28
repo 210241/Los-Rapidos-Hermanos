@@ -24,6 +24,8 @@ public class MoveOrb : MonoBehaviour
     public static float zSpeed;
     public int laneNum;
     public bool controlLocked;
+    public AudioSource MainSound;
+    //public AudioClip
     public Shooting Bullet;
     private Vector3 BASE_GRAVITY;
     private Vector3 LAST_POSITION;
@@ -63,7 +65,6 @@ public class MoveOrb : MonoBehaviour
         GameMaster.PlayerOnePoints = 0;
         GameMaster.PlayerTwoPoints = 0;
         Physics.gravity = BASE_GRAVITY;
-        StartCoroutine(PositionSaver());
         //GetComponent<Renderer>().enabled = false;
     }
 
@@ -78,7 +79,6 @@ public class MoveOrb : MonoBehaviour
 
         HandleStaticPoints();
         handleSideMovementPad();
-        HandleShootingTrigger();
 
         var orb = GetComponent<Rigidbody>();
         orb.velocity = new Vector3(horizVel + xVel, vertVel + yVel, 20 + zVel + zSpeed + slow);
@@ -127,21 +127,6 @@ public class MoveOrb : MonoBehaviour
 
     #region Perk Methods
 
-    private void SlowOn(float time)
-    {
-        slow = -5f;
-        StartCoroutine(SlowOff(time));
-    }
-
-    private void GhostOn(float time)
-    {
-        ghostOn = true;
-        vertVel = 0;
-        var position = GetComponent<Transform>().position;
-        GetComponent<Transform>().position = LAST_POSITION;
-        GetComponent<SphereCollider>().isTrigger = true;
-        StartCoroutine(GhostOff(time));
-    }
 
     private void SpeedUp(float speed, float time)
     {
@@ -163,11 +148,6 @@ public class MoveOrb : MonoBehaviour
             StartCoroutine(StopReverseMode(time));
         }
     }
-    private void StopShooting(float pauseTime)
-    {
-        canShoot = false;
-        StartCoroutine(startShooting(pauseTime));
-    }
 
     #endregion
 
@@ -184,37 +164,6 @@ public class MoveOrb : MonoBehaviour
         if (GetComponent<Transform>().gameObject.name == Players.PlayerTwo.ToString())
         {
             horizVel = 3 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadTwo.ToString())) * GameMaster.PlayerTwoControlReversedMultiplier;
-        }
-    }
-
-    private void HandleShootingTrigger()
-    {
-        var transform = GetComponent<Transform>();
-
-        if (canShoot)
-        {
-            if (transform.gameObject.name == Players.PlayerOne.ToString())
-            {
-                if (Input.GetAxis(Axis.PrimaryAttackOne.ToString()) < 0)
-                {
-                    StopShooting(0.25f);
-                    var position = transform.position;
-                    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.25f, position.z + 0.5f), GameMaster.noRotate);
-                    bullet.PlayerObject = transform.gameObject;
-                }
-
-            }
-
-            if (transform.gameObject.name == Players.PlayerTwo.ToString())
-            {
-                if (Input.GetAxis(Axis.PrimaryAttackTwo.ToString()) < 0)
-                {
-                    StopShooting(0.25f);
-                    var position = transform.position;
-                    var bullet = Instantiate(Bullet, new Vector3(position.x, position.y + 0.25f, position.z + 0.5f), GameMaster.noRotate);
-                    bullet.PlayerObject = transform.gameObject;
-                }
-            }
         }
     }
 
@@ -236,40 +185,13 @@ public class MoveOrb : MonoBehaviour
         zSpeed = 0;
     }
 
-    private IEnumerator startShooting(float pauseTime)
-    {
-        yield return new WaitForSeconds(pauseTime);
-        canShoot = true;
-    }
-
     private IEnumerator stopJump(float time)
     {
         yield return new WaitForSeconds(time);
         //Physics.gravity = GREAT_GRAVITY;
         vertVel = -FALL_SPEED;
     }
-    private IEnumerator GhostOff(float time)
-    {
-        yield return new WaitForSeconds(time);
-        GetComponent<Rigidbody>().useGravity = true;
-        GetComponent<SphereCollider>().isTrigger = false;
-        ghostOn = false;
 
-    }
-    private IEnumerator SlowOff(float time)
-    {
-        yield return new WaitForSeconds(time);
-        slow = 0f;
-    }
-
-    private IEnumerator PositionSaver()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1f);
-            LAST_POSITION = GetComponent<Transform>().position;
-        }
-    }
 
     #endregion
 
@@ -315,7 +237,6 @@ public class MoveOrb : MonoBehaviour
             if (GameMaster.PlayerOneLives > 0)
             {
                 player.GetComponent<Transform>().position = new Vector3(0, 1.2680794f, position.z);
-                //GhostOn(3f);
                 GameMaster.orbInstancePlayer1.position = Checkpoint;
                 GameMaster.orbInstancePlayer2.position = Checkpoint;
 
@@ -331,7 +252,6 @@ public class MoveOrb : MonoBehaviour
             if (GameMaster.PlayerTwoLives > 0)
             {
                 player.GetComponent<Transform>().position = new Vector3(0, 1.2680794f, position.z);
-                //GhostOn(3f);
                 GameMaster.orbInstancePlayer1.position = Checkpoint;
                 GameMaster.orbInstancePlayer2.position = Checkpoint;
             }
@@ -406,7 +326,6 @@ public class MoveOrb : MonoBehaviour
         }
         if (tag == Tags.SuperGriavity.ToString())
         {
-            //StartCoroutine(GreatGravityWhen(other.transform.position.z));
             canJump = true;
             zVel = 15;
             yVel = -10;
@@ -415,17 +334,14 @@ public class MoveOrb : MonoBehaviour
         if (tag == Tags.HalfPipe.ToString())
         {
             canJump = true;
-            zVel = 15;
-            yVel = -4;
-            //Physics.gravity = GREAT_GRAVITY;
+            zVel = 30;
+            yVel = -5;
         }
-
-        if (tag == Tags.HalfPipe.ToString())
+        if (tag == Tags.LastHalfPipe.ToString())
         {
             canJump = true;
-            zVel = 5;
+            zVel = -10;
             yVel = 0;
-            //Physics.gravity = GREAT_GRAVITY;
         }
 
         if (tag == Tags.Wall.ToString())
@@ -443,22 +359,13 @@ public class MoveOrb : MonoBehaviour
                 SpeedUp(3f, 3f);
             else if (name == Perks.BottlePoint.ToString())
                 AddPointToAppropriatePlayer();
-            else if (name == Perks.BlockShooting.ToString())
-                StopShooting(5f);
             else if (name == Perks.ReverseControls.ToString())
                 ReverseMove(3f);
-            else if (name == Perks.GhostPerk.ToString())
-                GhostOn(3f);
         }
 
         if (tag == Tags.Cactus.ToString())
         {
             DestroyAppropriatePlayer();
-        }
-
-        if (tag == Objects.Bullet.ToString())
-        {
-            SlowOn(1f);
         }
 
     }

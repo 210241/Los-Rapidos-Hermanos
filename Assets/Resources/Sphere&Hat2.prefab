@@ -289,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1058b88684efc64dab2ad4cb1d73003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FALL_SPEED: 0
   jump: 370
   shoot: 375
   horizVel: 0
@@ -298,6 +299,7 @@ MonoBehaviour:
   xVel: 0
   laneNum: 2
   controlLocked: 0
+  MainSound: {fileID: 0}
   Bullet: {fileID: 114794539130485496, guid: f7fd218afb5ff04438bdcaa3b61b6314, type: 2}
   canJump: 1
   canShoot: 1
@@ -315,10 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5caf4473475be44b56d667263819cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealthbarPlayerOne: {fileID: 0}
-  currentHealthbarPlayerTwo: {fileID: 0}
-  numberOfLivesPlayerOne: {fileID: 0}
-  numberOfLivesPlayerTwo: {fileID: 0}
+  levelProgress: {fileID: 0}
 --- !u!135 &135250911074583762
 SphereCollider:
   m_ObjectHideFlags: 1

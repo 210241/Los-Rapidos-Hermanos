@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 114718245615253762}
   - component: {fileID: 114318876912485008}
   m_Layer: 0
-  m_Name: SatelliteHoleFloor
+  m_Name: SatelliteHoleFloorBlock(5x5)
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
