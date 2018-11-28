@@ -65,6 +65,7 @@ public class GameMaster : MonoBehaviour
     public static Vector3 AvgOrbsVelocity;
     public static Vector3 orbVelocity1;
     public static Vector3 orbVelocity2;
+    public static float AveragePlayersZDimension;
     public static Stopwatch timer;
     public static int MaxWallHealth;
     public static int CurrentWallHealthPlayerOne;
@@ -75,6 +76,8 @@ public class GameMaster : MonoBehaviour
     public static bool GenerateFloorsRandomly = true;
 
     public int LevelCounter = 1;
+    public int LevelLenght;
+    public static int StaticLevelLenght;
     private List<FloorData> Level1Map;
 
     // Use this for initialization
@@ -82,6 +85,7 @@ public class GameMaster : MonoBehaviour
     {
         orbInstancePlayer1 = Orb_Player1;
         orbInstancePlayer2 = Orb_Player2;
+        AveragePlayersZDimension = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2.0f;
         //BasicFloor = Resources.Load<Transform>("Floor/BasicFloorBlock(5x5)");
         //CrossHoleFloor = Resources.Load<Transform>("Floor/CrossHoleFloorBlock(5x5)");
         //BigCrossHoleFloor = Resources.Load<Transform>("Floor/BigCrossHoleFloorBlock(5x5)");
@@ -167,6 +171,7 @@ public class GameMaster : MonoBehaviour
 
         blobShadowProjectorPlayerOne.GetComponent<Projector>().ignoreLayers = (1 << 2);
         blobShadowProjectorPlayerTwo.GetComponent<Projector>().ignoreLayers = (1 << 2);
+        StaticLevelLenght = LevelLenght;
 
     }
 
@@ -236,6 +241,7 @@ public class GameMaster : MonoBehaviour
         var playerOnePosition = Orb_Player1.position;
         var playerTwoPosition = Orb_Player2.position;
 
+        AveragePlayersZDimension = (orbInstancePlayer1.position.z + orbInstancePlayer2.position.z) / 2.0f;
         blobShadowProjectorPlayerOne.GetComponent<Transform>().position = playerOnePosition;
         blobShadowProjectorPlayerTwo.GetComponent<Transform>().position = playerTwoPosition;
 
@@ -257,7 +263,7 @@ public class GameMaster : MonoBehaviour
 
         PlayerOneScore.text = PlayerOnePoints.ToString();
         PlayerTwoScore.text = PlayerTwoPoints.ToString();
-
+        StaticLevelLenght = LevelLenght;
         //if (floorsWithoutWall >= 20)
         //{
         //    IsWallOnTheScreen = true;
