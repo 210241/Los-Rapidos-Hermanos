@@ -17,6 +17,7 @@ TagManager:
   - SuperGriavity
   - LastHalfPipe
   - Checkpoint
+  - Teleport
   layers:
   - Default
   - TransparentFX

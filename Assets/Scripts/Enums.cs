@@ -39,7 +39,8 @@ namespace EnumNamespace
         HalfPipe,
         Ramp,
         SuperGriavity,
-        LastHalfPipe
+        LastHalfPipe,
+        Teleport
     }
 
     public enum Axis

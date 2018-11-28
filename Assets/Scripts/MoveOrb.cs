@@ -319,7 +319,7 @@ public class MoveOrb : MonoBehaviour
             Physics.gravity = BASE_GRAVITY;
             canJump = true;
             zVel = 15;
-            yVel = 2;
+            //yVel = 2;
         }
         if (tag == Tags.SuperGriavity.ToString())
         {
@@ -342,6 +342,11 @@ public class MoveOrb : MonoBehaviour
             canJump = true;
             zVel = 0;
             yVel = 0;
+        }
+
+        if (tag == Tags.Teleport.ToString())
+        {
+            TeleportPlayer();
         }
 
 
@@ -373,7 +378,10 @@ public class MoveOrb : MonoBehaviour
 
     }
 
-
+    public void TeleportPlayer()
+    {
+        GetComponent<Transform>().position = new Vector3(0,0,15);
+    }
     #endregion
 
 
