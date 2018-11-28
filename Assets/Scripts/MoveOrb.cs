@@ -340,7 +340,7 @@ public class MoveOrb : MonoBehaviour
         {
             DeathZone = other.gameObject.transform.position.y - 10;
             canJump = true;
-            zVel = -10;
+            zVel = 0;
             yVel = 0;
         }
 
