@@ -8009,7 +8009,7 @@ GameObject:
   - component: {fileID: 931234017}
   - component: {fileID: 931234016}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8066,8 +8066,8 @@ MonoBehaviour:
   SatelliteHoleFloor: {fileID: 4987356371796342, guid: c8e6edae1d20e2f4b99b3a0928f04813,
     type: 2}
   BaseCactus: {fileID: 4474279505127030, guid: 1f57eb00f14ccf54bad4384f0b03ad24, type: 2}
-  Orb_Player1: {fileID: 0}
-  Orb_Player2: {fileID: 0}
+  Orb_Player1: {fileID: 911775903}
+  Orb_Player2: {fileID: 1150975059}
   Wall: {fileID: 4503256689226266, guid: 33a3440aeb5939648b83d7302a3f19fb, type: 2}
   Fog: {fileID: 0}
   BlobShadowProjector: {fileID: 0}
@@ -17818,7 +17818,7 @@ GameObject:
   - component: {fileID: 1603997833}
   - component: {fileID: 1603997832}
   m_Layer: 0
-  m_Name: EventSystem (1)
+  m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
