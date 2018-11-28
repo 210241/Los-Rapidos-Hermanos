@@ -446,6 +446,66 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: -0.11
       objectReference: {fileID: 0}
+    - target: {fileID: 1211438749213046, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864021023583254, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700151974923434, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1556933083330480, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689529773341554, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699681359613172, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1804736285542670, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295865366526212, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356029468489286, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1413300538311758, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779277898513898, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1964511332992640, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232730845496540, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394842350069090, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301552349822912, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
+      propertyPath: m_TagString
+      value: LastHalfPipe
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c15ef6d228d57d4badbfe374100d308, type: 2}
   m_IsPrefabAsset: 0
