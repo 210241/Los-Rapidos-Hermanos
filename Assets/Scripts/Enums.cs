@@ -64,4 +64,11 @@ namespace EnumNamespace
         DoubleBasicFloor,        
     }
 
+    public enum LevelFinish
+    {
+        FirstFloorFinish,
+        SecondFloorFinish,
+        ThirdFloorFinish,
+    }
+
 }

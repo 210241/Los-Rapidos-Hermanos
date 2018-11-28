@@ -6,6 +6,7 @@ using System.Timers;
 using UnityEngine;
 using UnityEngine.UI;
 using EnumNamespace;
+using UnityEngine.SceneManagement;
 using Timer = System.Timers.Timer;
 
 public class MoveOrb : MonoBehaviour
@@ -158,13 +159,13 @@ public class MoveOrb : MonoBehaviour
     {
         if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
         {
-            horizVel = 3 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadOne.ToString())) * GameMaster.PlayerOneControlReversedMultiplier;
+            horizVel = 4 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadOne.ToString())) * GameMaster.PlayerOneControlReversedMultiplier;
 
         }
 
         if (GetComponent<Transform>().gameObject.name == Players.PlayerTwo.ToString())
         {
-            horizVel = 3 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadTwo.ToString())) * GameMaster.PlayerTwoControlReversedMultiplier;
+            horizVel = 4 * Mathf.Round(Input.GetAxis(Axis.LeftRightPadTwo.ToString())) * GameMaster.PlayerTwoControlReversedMultiplier;
         }
     }
 
@@ -375,6 +376,22 @@ public class MoveOrb : MonoBehaviour
         {
             DestroyAppropriatePlayer();
         }
+
+        if (tag == LevelFinish.FirstFloorFinish.ToString())
+        {
+            SceneManager.LoadScene("Level2");
+        }
+
+        if (tag == LevelFinish.SecondFloorFinish.ToString())
+        {
+            SceneManager.LoadScene("Level3");
+        }
+
+        if (tag == LevelFinish.ThirdFloorFinish.ToString())
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+
 
     }
 
