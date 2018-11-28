@@ -30,6 +30,7 @@ namespace EnumNamespace
 
     public enum Tags
     {
+        Checkpoint,
         Ground,
         Perk,
         Destroyable,

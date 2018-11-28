@@ -39,7 +39,7 @@ public class MoveOrb : MonoBehaviour
     public long timerGhost;
     public float slow;
     private float DeathZone;
-    private Vector3 Checkpoint;
+    public static Vector3 Checkpoint;
 
     #endregion
 
@@ -47,6 +47,7 @@ public class MoveOrb : MonoBehaviour
 
     private void Start()
     {
+        Checkpoint = new Vector3(0f, .5f, .5f);
         BASE_GRAVITY = new Vector3(0f, -150.0F, 0f);
         GREAT_GRAVITY = new Vector3(0f, -520f, 0f);
         LAST_POSITION = GetComponent<Transform>().position;
@@ -97,7 +98,7 @@ public class MoveOrb : MonoBehaviour
 
         }
 
-        if (GetComponent<Transform>().position.y < DeathZone-1.5f)
+        if (GetComponent<Transform>().position.y < DeathZone)
         {
             DestroyAppropriatePlayer();
         }
@@ -236,10 +237,9 @@ public class MoveOrb : MonoBehaviour
             GameMaster.PlayerOneLives--;
             if (GameMaster.PlayerOneLives > 0)
             {
-                player.GetComponent<Transform>().position = new Vector3(0, 1.2680794f, position.z);
-                GameMaster.orbInstancePlayer1.position = Checkpoint;
-                GameMaster.orbInstancePlayer2.position = Checkpoint;
-
+                GameMaster.orbInstancePlayer1.position = new Vector3(Checkpoint.x - 1.2f, Checkpoint.y, Checkpoint.z);
+                GameMaster.orbInstancePlayer2.position = new Vector3(Checkpoint.x + 1.2f, Checkpoint.y, Checkpoint.z);
+                DeathZone = Checkpoint.y-2;
             }
             else
             {
@@ -251,9 +251,9 @@ public class MoveOrb : MonoBehaviour
             GameMaster.PlayerTwoLives--;
             if (GameMaster.PlayerTwoLives > 0)
             {
-                player.GetComponent<Transform>().position = new Vector3(0, 1.2680794f, position.z);
-                GameMaster.orbInstancePlayer1.position = Checkpoint;
-                GameMaster.orbInstancePlayer2.position = Checkpoint;
+                GameMaster.orbInstancePlayer1.position = new Vector3(Checkpoint.x - 1.2f, Checkpoint.y, Checkpoint.z);
+                GameMaster.orbInstancePlayer2.position = new Vector3(Checkpoint.x + 1.2f, Checkpoint.y, Checkpoint.z);
+                DeathZone = Checkpoint.y-2;
             }
             else
             {
@@ -264,41 +264,41 @@ public class MoveOrb : MonoBehaviour
 
     #region Trigger and Collision Enter
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == Tags.Ground.ToString())
-        {
-            var positionOrb = GetComponent<Transform>().position;
-            GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
-            zVel = 0;
-            yVel = 0;
-            canJump = true;
-        }
-        if (other.tag == Tags.Ramp.ToString())
-        {
-            var positionOrb = GetComponent<Transform>().position;
-            GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
-            zVel = 15;
-            yVel = 2;
-            canJump = true;
-        }
-        if (other.tag == Tags.SuperGriavity.ToString())
-        {
-            var positionOrb = GetComponent<Transform>().position;
-            GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
-            zVel = 15;
-            yVel = -20;
-            canJump = true;
-        }
-        if (other.tag == Tags.HalfPipe.ToString())
-        {
-            var positionOrb = GetComponent<Transform>().position;
-            GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
-            zVel = 15;
-            yVel = -4;
-            canJump = true;
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.tag == Tags.Ground.ToString())
+    //    {
+    //        var positionOrb = GetComponent<Transform>().position;
+    //        GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
+    //        zVel = 0;
+    //        yVel = 0;
+    //        canJump = true;
+    //    }
+    //    if (other.tag == Tags.Ramp.ToString())
+    //    {
+    //        var positionOrb = GetComponent<Transform>().position;
+    //        GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
+    //        zVel = 15;
+    //        yVel = 2;
+    //        canJump = true;
+    //    }
+    //    if (other.tag == Tags.SuperGriavity.ToString())
+    //    {
+    //        var positionOrb = GetComponent<Transform>().position;
+    //        GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
+    //        zVel = 15;
+    //        yVel = -20;
+    //        canJump = true;
+    //    }
+    //    if (other.tag == Tags.HalfPipe.ToString())
+    //    {
+    //        var positionOrb = GetComponent<Transform>().position;
+    //        GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
+    //        zVel = 15;
+    //        yVel = -4;
+    //        canJump = true;
+    //    }
+    //}
 
     private void OnCollisionEnter(Collision other)
     {
@@ -310,15 +310,12 @@ public class MoveOrb : MonoBehaviour
             zVel = 0;
             vertVel = 0;
             yVel = 0;
-            DeathZone = other.gameObject.transform.position.y;
-            if (other.gameObject.name.Split(' ')[0] == "BasicFloorBlock(5x5)")
-            {
-                Checkpoint = other.gameObject.transform.position;
-            }
+            DeathZone = other.gameObject.transform.position.y - 2;
         }
 
         if (tag == Tags.Ramp.ToString())
         {
+            DeathZone = other.gameObject.transform.position.y - 2;
             Physics.gravity = BASE_GRAVITY;
             canJump = true;
             zVel = 15;
@@ -326,27 +323,33 @@ public class MoveOrb : MonoBehaviour
         }
         if (tag == Tags.SuperGriavity.ToString())
         {
+            DeathZone = other.gameObject.transform.position.y - 3;
             canJump = true;
             zVel = 15;
-            yVel = -10;
+            yVel = -8;
         }
 
         if (tag == Tags.HalfPipe.ToString())
         {
+            DeathZone = other.gameObject.transform.position.y - 10;
             canJump = true;
             zVel = 30;
             yVel = -5;
         }
         if (tag == Tags.LastHalfPipe.ToString())
         {
+            DeathZone = other.gameObject.transform.position.y - 10;
             canJump = true;
             zVel = -10;
             yVel = 0;
         }
 
-        if (tag == Tags.Wall.ToString())
+
+        if (tag == Tags.Checkpoint.ToString())
         {
-            DestroyAppropriatePlayer();
+            Checkpoint = other.gameObject.transform.position;
+
+            Destroy(other.gameObject);
         }
 
         if (tag == Tags.Perk.ToString())
@@ -370,11 +373,6 @@ public class MoveOrb : MonoBehaviour
 
     }
 
-    private IEnumerator GreatGravityWhen(float positionZ)
-    {
-        yield return new WaitUntil(() => GetComponent<Transform>().position.z > positionZ);
-        Physics.gravity = GREAT_GRAVITY;
-    }
 
     #endregion
 
