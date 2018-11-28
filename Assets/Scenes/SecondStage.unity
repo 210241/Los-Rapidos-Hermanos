@@ -4819,7 +4819,7 @@ Transform:
   m_GameObject: {fileID: 627887576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 6}
   m_Children:
   - {fileID: 492715543}
   - {fileID: 1070842529}
@@ -5068,15 +5068,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4242795811009470, guid: 525b257938874104d84dc3e958ebaf4d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4242795811009470, guid: 525b257938874104d84dc3e958ebaf4d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.602
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4242795811009470, guid: 525b257938874104d84dc3e958ebaf4d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 365
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4242795811009470, guid: 525b257938874104d84dc3e958ebaf4d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -7423,10 +7423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5caf4473475be44b56d667263819cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealthbarPlayerOne: {fileID: 0}
-  currentHealthbarPlayerTwo: {fileID: 0}
-  numberOfLivesPlayerOne: {fileID: 0}
-  numberOfLivesPlayerTwo: {fileID: 0}
+  levelProgress: {fileID: 0}
 --- !u!114 &931234017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7474,6 +7471,7 @@ MonoBehaviour:
   RampFloor: {fileID: 0}
   PipeLineFloor: {fileID: 0}
   LevelCounter: 1
+  LevelLenght: 0
 --- !u!4 &931234019
 Transform:
   m_ObjectHideFlags: 0
@@ -15272,7 +15270,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4728923088665888, guid: 26130f080d34aaf4ca880c5f1c1de865, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 365
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4728923088665888, guid: 26130f080d34aaf4ca880c5f1c1de865, type: 2}
       propertyPath: m_LocalRotation.x
