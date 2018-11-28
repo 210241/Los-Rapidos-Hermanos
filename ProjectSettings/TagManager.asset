@@ -18,6 +18,7 @@ TagManager:
   - LastHalfPipe
   - Checkpoint
   - Teleport
+  - EndLevelRing
   layers:
   - Default
   - TransparentFX
