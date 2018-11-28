@@ -418,14 +418,6 @@ public class MoveOrb : MonoBehaviour
         {
             canJump = true;
             zVel = 35;
-            yVel = -4;
-            //Physics.gravity = GREAT_GRAVITY;
-        }
-
-        if (tag == Tags.HalfPipe.ToString())
-        {
-            canJump = true;
-            zVel = 5;
             yVel = 0;
             //Physics.gravity = GREAT_GRAVITY;
         }
