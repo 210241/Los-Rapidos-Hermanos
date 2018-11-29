@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.38454434, g: 0.048792757, b: 0.00404038, a: 1}
+  m_IndirectSpecularColor: {r: 0.28717816, g: 0.335866, b: 0.5218967, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1460,7 +1460,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-563646
+  m_Name: pb_Mesh-949392
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -4165,10 +4165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6e0c400c32e2c4ea22deff52136bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reverse: {fileID: 4277352480639190, guid: 19093cbc41261284e872885018863d24, type: 2}
-  BlockShooting: {fileID: 0}
-  GhostPerk: {fileID: 4087408797790842, guid: d04b75b51daa49f458fcea7aea776518, type: 2}
-  Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
 --- !u!114 &316137384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10832,7 +10828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5caf4473475be44b56d667263819cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelProgress: {fileID: 0}
+  levelProgress: {fileID: 11972048}
 --- !u!114 &931234017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10862,8 +10858,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 20595805751681852, guid: 04f07eb72a09d3a40bd0c9885e6bd042,
     type: 2}
-  PlayerOneScore: {fileID: 0}
-  PlayerTwoScore: {fileID: 0}
+  PlayerOneScore: {fileID: 160779027}
+  PlayerTwoScore: {fileID: 1289382116}
   BasicFloor: {fileID: 4703674248597768, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463, type: 2}
   CrossHoleFloor: {fileID: 4120886961169292, guid: 113ea84423fe9f44c987b9389a42000a,
     type: 2}
@@ -10880,7 +10876,7 @@ MonoBehaviour:
   RampFloor: {fileID: 0}
   PipeLineFloor: {fileID: 0}
   LevelCounter: 1
-  LevelLenght: 0
+  LevelLenght: 1482
 --- !u!4 &931234019
 Transform:
   m_ObjectHideFlags: 0
@@ -18074,10 +18070,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6e0c400c32e2c4ea22deff52136bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reverse: {fileID: 4277352480639190, guid: 19093cbc41261284e872885018863d24, type: 2}
-  BlockShooting: {fileID: 0}
-  GhostPerk: {fileID: 4087408797790842, guid: d04b75b51daa49f458fcea7aea776518, type: 2}
-  Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
 --- !u!114 &1484708223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20389,7 +20381,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1673895940}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1603997834

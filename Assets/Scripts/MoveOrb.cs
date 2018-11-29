@@ -67,7 +67,6 @@ public class MoveOrb : MonoBehaviour
         GameMaster.PlayerOnePoints = 0;
         GameMaster.PlayerTwoPoints = 0;
         Physics.gravity = BASE_GRAVITY;
-        //GetComponent<Renderer>().enabled = false;
     }
 
     void FixedUpdate()
@@ -137,18 +136,9 @@ public class MoveOrb : MonoBehaviour
     }
     private void ReverseMove(float time)
     {
-
-        if (GetComponent<Transform>().gameObject.name == Players.PlayerOne.ToString())
-        {
-            GameMaster.PlayerTwoControlReversedMultiplier = -1; //true
-            StartCoroutine(StopReverseMode(time));
-        }
-
-        if (GetComponent<Transform>().gameObject.name == Players.PlayerTwo.ToString())
-        {
-            GameMaster.PlayerOneControlReversedMultiplier = -1; //true
-            StartCoroutine(StopReverseMode(time));
-        }
+        GameMaster.PlayerTwoControlReversedMultiplier = -1; //true
+        GameMaster.PlayerOneControlReversedMultiplier = -1; //true
+        StartCoroutine(StopReverseMode(time));
     }
 
     #endregion
@@ -190,7 +180,6 @@ public class MoveOrb : MonoBehaviour
     private IEnumerator stopJump(float time)
     {
         yield return new WaitForSeconds(time);
-        //Physics.gravity = GREAT_GRAVITY;
         vertVel = -FALL_SPEED;
     }
 
@@ -235,71 +224,19 @@ public class MoveOrb : MonoBehaviour
 
         if (player.name == Players.PlayerOne.ToString())
         {
-            GameMaster.PlayerOneLives--;
-            if (GameMaster.PlayerOneLives > 0)
-            {
                 GameMaster.orbInstancePlayer1.position = new Vector3(Checkpoint.x - 1.2f, Checkpoint.y, Checkpoint.z);
                 GameMaster.orbInstancePlayer2.position = new Vector3(Checkpoint.x + 1.2f, Checkpoint.y, Checkpoint.z);
                 DeathZone = Checkpoint.y-2;
-            }
-            else
-            {
-                GameOver.Game_Over();
-            }
         }
         else
         {
-            GameMaster.PlayerTwoLives--;
-            if (GameMaster.PlayerTwoLives > 0)
-            {
                 GameMaster.orbInstancePlayer1.position = new Vector3(Checkpoint.x - 1.2f, Checkpoint.y, Checkpoint.z);
                 GameMaster.orbInstancePlayer2.position = new Vector3(Checkpoint.x + 1.2f, Checkpoint.y, Checkpoint.z);
                 DeathZone = Checkpoint.y-2;
-            }
-            else
-            {
-                GameOver.Game_Over();
-            }
         }
     }
 
     #region Trigger and Collision Enter
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.tag == Tags.Ground.ToString())
-    //    {
-    //        var positionOrb = GetComponent<Transform>().position;
-    //        GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
-    //        zVel = 0;
-    //        yVel = 0;
-    //        canJump = true;
-    //    }
-    //    if (other.tag == Tags.Ramp.ToString())
-    //    {
-    //        var positionOrb = GetComponent<Transform>().position;
-    //        GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
-    //        zVel = 15;
-    //        yVel = 2;
-    //        canJump = true;
-    //    }
-    //    if (other.tag == Tags.SuperGriavity.ToString())
-    //    {
-    //        var positionOrb = GetComponent<Transform>().position;
-    //        GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
-    //        zVel = 15;
-    //        yVel = -20;
-    //        canJump = true;
-    //    }
-    //    if (other.tag == Tags.HalfPipe.ToString())
-    //    {
-    //        var positionOrb = GetComponent<Transform>().position;
-    //        GetComponent<Transform>().position = new Vector3(positionOrb.x, other.GetComponent<Transform>().position.y + 0.3516032f, positionOrb.z);
-    //        zVel = 15;
-    //        yVel = -4;
-    //        canJump = true;
-    //    }
-    //}
 
     private void OnCollisionEnter(Collision other)
     {
@@ -363,10 +300,7 @@ public class MoveOrb : MonoBehaviour
             string name = other.gameObject.name;
             Destroy(other.gameObject);
 
-
-            if (name == Perks.TacoIncreaseSpeed.ToString())
-                SpeedUp(3f, 3f);
-            else if (name == Perks.BottlePoint.ToString())
+             if (name == Perks.BottlePoint.ToString())
                 AddPointToAppropriatePlayer();
             else if (name == Perks.ReverseControls.ToString())
                 ReverseMove(3f);

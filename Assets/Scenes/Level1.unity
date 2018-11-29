@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.053151503, g: 0.15094265, b: 0.19470885, a: 1}
+  m_IndirectSpecularColor: {r: 0.05339195, g: 0.15094897, b: 0.19478199, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4144,10 +4144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6e0c400c32e2c4ea22deff52136bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reverse: {fileID: 4277352480639190, guid: 19093cbc41261284e872885018863d24, type: 2}
-  BlockShooting: {fileID: 0}
-  GhostPerk: {fileID: 4087408797790842, guid: d04b75b51daa49f458fcea7aea776518, type: 2}
-  Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
 --- !u!114 &429182533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4707,6 +4703,11 @@ Prefab:
     - target: {fileID: 4703674248597768, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463, type: 2}
       propertyPath: m_RootOrder
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 114457439475762678, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463, type: 2}
@@ -5772,6 +5773,11 @@ Prefab:
       propertyPath: m_Name
       value: BasicFloor (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 114457439475762678, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463, type: 2}
   m_IsPrefabAsset: 0
@@ -6358,7 +6364,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh56552
+  m_Name: pb_Mesh28086
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -6550,6 +6556,11 @@ Prefab:
     - target: {fileID: 1869541483835056, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463, type: 2}
       propertyPath: m_Name
       value: BasicFloor (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114457439475762678, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463, type: 2}
@@ -6966,10 +6977,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6e0c400c32e2c4ea22deff52136bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reverse: {fileID: 4277352480639190, guid: 19093cbc41261284e872885018863d24, type: 2}
-  BlockShooting: {fileID: 0}
-  GhostPerk: {fileID: 4087408797790842, guid: d04b75b51daa49f458fcea7aea776518, type: 2}
-  Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
 --- !u!114 &864860166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9749,10 +9756,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6e0c400c32e2c4ea22deff52136bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reverse: {fileID: 4277352480639190, guid: 19093cbc41261284e872885018863d24, type: 2}
-  BlockShooting: {fileID: 0}
-  GhostPerk: {fileID: 4087408797790842, guid: d04b75b51daa49f458fcea7aea776518, type: 2}
-  Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
 --- !u!114 &1380587712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13089,6 +13092,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114233446721431212, guid: 1aa8e164ea5c41f41ba0a28d89df79f8,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1aa8e164ea5c41f41ba0a28d89df79f8, type: 2}
   m_IsPrefabAsset: 0
@@ -15433,10 +15441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6e0c400c32e2c4ea22deff52136bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Reverse: {fileID: 4277352480639190, guid: 19093cbc41261284e872885018863d24, type: 2}
-  BlockShooting: {fileID: 0}
-  GhostPerk: {fileID: 4087408797790842, guid: d04b75b51daa49f458fcea7aea776518, type: 2}
-  Taco: {fileID: 4613842989799482, guid: e66a78bb62fb271469738a1b342469e9, type: 2}
 --- !u!114 &1646157514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15991,6 +15995,11 @@ Prefab:
     - target: {fileID: 1869541483835056, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463, type: 2}
       propertyPath: m_Name
       value: BasicFloor (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114457439475762678, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72c74e3c2e8e71e4daaf4b0db0b0f463, type: 2}
